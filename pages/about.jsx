@@ -16,6 +16,7 @@ import { callBackendApi, getDomain, getImagePath } from "@/lib/myFun";
 import GoogleTagManager from "@/lib/GoogleTagManager";
 import JsonLd from "@/components/json/JsonLd";
 
+
 const myFont = Roboto({
   subsets: ["cyrillic"],
   weight: ["400", "700"],
@@ -34,6 +35,8 @@ export default function About({
   imagePath,
   categories,
   contact_details,
+  favicon,
+
 }) {
   const markdownIt = new MarkdownIt();
   const content = markdownIt?.render(about_me.value || "");
@@ -41,13 +44,14 @@ export default function About({
 
   return (
     <div className={myFont.className}>
-      <Head>
+       <Head>
         <meta charSet="UTF-8" />
         <title>{meta?.title}</title>
         <meta name="description" content={meta?.description} />
-        <link rel="author" href={`https://${domain}`} />
-        <link rel="publisher" href={`https://${domain}`} />
-        <link rel="canonical" href={`https://${domain}`} />
+        <link rel="author" href={`https://www.${domain}`} />
+        <link rel="publisher" href={`https://www.${domain}`} />
+        <link rel="canonical" href={`https://www.${domain}/about`} />
+        {/* <meta name="robots" content="noindex" /> */}
         <meta name="theme-color" content="#008DE5" />
         <link rel="manifest" href="/manifest.json" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -60,19 +64,19 @@ export default function About({
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href={`${imagePath}/${logo.file_name}`}
+          href={`${process.env.NEXT_PUBLIC_SITE_MANAGER}/images/${imagePath}/${favicon}`}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href={`${imagePath}/${logo.file_name}`}
+          href={`${process.env.NEXT_PUBLIC_SITE_MANAGER}/images/${imagePath}/${favicon}`}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href={`${imagePath}/${logo.file_name}`}
+          href={`${process.env.NEXT_PUBLIC_SITE_MANAGER}/images/${imagePath}/${favicon}`}
         />
       </Head>
 
@@ -102,14 +106,6 @@ export default function About({
                     <Container className="py-16">
                       <div className="grid grid-cols-about gap-16 w-full">
                         <div className={font2.className}>
-                          <p
-                            className={cn(
-                              "text-xs uppercase text-yellow-600",
-                              myFont.className
-                            )}
-                          >
-                            LIFESTYLE BLOGGER
-                          </p>
                           <div
                             className="prose-xl"
                             dangerouslySetInnerHTML={{ __html: content }}
@@ -139,57 +135,34 @@ export default function About({
           })
         : "Page Disabled,under maintenance"}
 
-      <JsonLd
+{/* <JsonLd
         data={{
           "@context": "https://schema.org",
           "@graph": [
             {
-              "@type": "WebPage",
-              "@id": `http://${domain}/`,
+              "@type": "WebSite",
+              "@id": `http://${domain}/#website`,
               url: `http://${domain}/`,
-              name: meta?.title,
-              isPartOf: {
-                "@id": `http://${domain}`,
-              },
+              name: domain,
               description: meta?.description,
               inLanguage: "en-US",
-            },
-            {
-              "@type": "Organization",
-              "@id": `http://${domain}`,
-              name: domain,
-              url: `http://${domain}/`,
-              logo: {
-                "@type": "ImageObject",
-                url: `$${imagePath}/${logo.file_name}`,
+              publisher: {
+                "@type": "Organization",
+                "@id": `http://${domain}`,
               },
-              sameAs: [
-                "http://www.facebook.com",
-                "http://www.twitter.com",
-                "http://instagram.com",
-              ],
             },
             {
-              "@type": "ItemList",
-              url: `http://${domain}`,
-              name: "blog",
-              itemListElement: blog_list?.map((blog, index) => ({
+              "@type": "BreadcrumbList",
+              itemListElement: breadcrumbs.map((breadcrumb, index) => ({
                 "@type": "ListItem",
                 position: index + 1,
-                item: {
-                  "@type": "Article",
-                  url: `http://${domain}/${blog?.article_category?.name
-                    ?.replaceAll(" ", "-")
-                    ?.toLowerCase()}/${blog.title
-                    .replaceAll(" ", "-")
-                    ?.toLowerCase()}`,
-                  name: blog.title,
-                },
+                name: breadcrumb.label,
+                item: `http://${domain}${breadcrumb.url}`,
               })),
             },
           ],
         }}
-      />
+      /> */}
     </div>
   );
 }
@@ -233,7 +206,7 @@ export async function getServerSideProps({ req, query }) {
       categories: categories?.data[0]?.value || null,
       domain,
       meta: meta?.data[0]?.value || null,
-      contact_details: contact_details.data[0].value,
+      contact_details: contact_details?.data[0]?.value || null,
       copyright: copyright?.data[0]?.value || null,
       nav_type: nav_type?.data[0]?.value || {},
     },

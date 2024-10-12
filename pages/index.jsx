@@ -11,12 +11,14 @@ import Rightbar from "@/components/containers/Rightbar";
 import Footer from "@/components/containers/Footer";
 import JsonLd from "@/components/json/JsonLd";
 import { useRouter } from "next/router";
+import BlogCard from "@/components/common/BlogCard";
 
 import {
   callBackendApi,
   getDomain,
   getImagePath,
   robotsTxt,
+  sanitizeUrl,
 } from "@/lib/myFun";
 
 // Font
@@ -26,7 +28,6 @@ import MustRead from "@/components/containers/MustRead";
 import SectionHeading from "@/components/common/SectionHeading";
 import Link from "next/link";
 import dayjs from "dayjs";
-import Image from "next/image";
 import Navbar from "@/components/containers/Navbar";
 const myFont = Raleway({
   subsets: ["cyrillic", "cyrillic-ext", "latin", "latin-ext"],
@@ -43,9 +44,18 @@ export default function Home({
   nav_type,
   banner,
   favicon,
-  layout,
   tag_list,
 }) {
+  useEffect(() => {
+    fetch("/api/get-images")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Image files:", data.images);
+      })
+      .catch((error) => {
+        console.error("Error fetching image files:", error);
+      });
+  }, []);
   const router = useRouter();
   const { category } = router.query;
 
@@ -65,7 +75,7 @@ export default function Home({
     }
   }, [category, router]);
 
-  const page = layout?.find((page) => page.page === "home");
+  // const page = layout?.find((page) => page.page === "home");
 
   return (
     <div className={`min-h-screen ${myFont.className}`}>
@@ -105,9 +115,176 @@ export default function Home({
       </Head>
 
       <Navbar />
-      <Banner />
+      <Banner blog_list={blog_list} imagePath={imagePath} />
 
-      <MustRead blogs={blog_list} imagePath={imagePath} />
+      <MustRead blog_list={blog_list} imagePath={imagePath} />
+
+      <FullContainer className="py-20 mx-auto max-w-[1500px]">
+        <div className="  py-9  ">
+          <h2 className="font-bold text-3xl md:text-5xl -mt-16 text-center">
+            Latest Posts
+          </h2>
+          <h3 className="font-bold text-lg md:text-xl mt-4 text-center text-gray-500 px-6">
+            Stay up-to-date
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full px-3">
+          {/* Featured Post */}
+          <div className="col-span-1 md:col-span-2 flex flex-col gap-12">
+            {blog_list?.map(
+              (item, index) =>
+                item.isFeatured && (
+                  <div key={index} className="relative flex">
+                    <Link
+                      href={`/${encodeURI(
+                        sanitizeUrl(item.article_category)
+                      )}/${encodeURI(sanitizeUrl(item.title))}`}
+                      imageHeight="h-72 md:h-[420px]"
+                      imageTitle={
+                        item.imageTitle || item.title || "Blog Image Title"
+                      }
+                    >
+                      {/* Image Container */}
+                      <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden">
+                        <img
+                          src={
+                            item.image
+                              ? `${imagePath}/${item.image}`
+                              : "/no-image.png"
+                          }
+                          alt={
+                            item.altImage || item.tagline || "Article Thumbnail"
+                          }
+                          className="w-full h-full object-cover hover:scale-110 transition-all duration-1000"
+                          title={
+                            item.imageTitle || item.title || "Blog Image Title"
+                          }
+                        />
+                        {/* Text Overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-50 space-y-6 lg:pb-20 p-6  lg:px-20 flex flex-col justify-end  text-white">
+                          <h2 className="text-lg md:text-xl font-bold">
+                            {item.article_category}
+                          </h2>
+                          <h2 className="text-2xl md:text-4xl font-bold mt-2">
+                            {item.title}
+                          </h2>
+                          <div className="flex items-center gap-2 mt-2">
+                            <p className="text-sm font-semibold">
+                              <span className="text-gray-400 text-sm">By</span>:{" "}
+                              {item.author}
+                            </p>
+                            <p className="text-sm text-gray-400 font-semibold">
+                              {dayjs(item?.published_at)?.format("MMM D, YYYY")}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                )
+            )}
+
+            {/* Must Read Section */}
+            {blog_list?.map(
+              (item, index) =>
+                item.isMustRead && (
+                  <div
+                    key={index}
+                    className="flex flex-col md:flex-row gap-6 bg-white shadow-md "
+                  >
+                    <div className="flex-shrink-0 w-full md:w-1/2 h-[200px] md:h-[330px] overflow-hidden">
+                      <Link
+                        href={`/${encodeURI(
+                          sanitizeUrl(item.article_category)
+                        )}/${encodeURI(sanitizeUrl(item.title))}`}
+                        imageHeight="h-72 md:h-[420px]"
+                        imageTitle={
+                          item.imageTitle || item.title || "Blog Image Title"
+                        }
+                      >
+                        <img
+                          src={
+                            item.image
+                              ? `${imagePath}/${item.image}`
+                              : "/no-image.png"
+                          }
+                          alt={
+                            item.altImage || item.tagline || "Article Thumbnail"
+                          }
+                          className="w-full h-full object-cover hover:scale-110 transition-all duration-1000"
+                          title={
+                            item.imageTitle || item.title || "Blog Image Title"
+                          }
+                        />
+                      </Link>
+                    </div>
+
+                    <div className="flex flex-col justify-center gap-5 w-full md:w-2/3  py-2 px-4">
+                      <Link
+                        href={`/${encodeURI(
+                          sanitizeUrl(item.article_category)
+                        )}/${encodeURI(sanitizeUrl(item.title))}`}
+                        imageHeight="h-72 md:h-[420px]"
+                        imageTitle={
+                          item.imageTitle || item.title || "Blog Image Title"
+                        }
+                      >
+                        <h2 className="text-lg md:text-xl font-bold">
+                          {item.article_category}
+                        </h2>
+
+                        <h2 className="text-2xl font-bold">{item.title}</h2>
+                      </Link>
+
+                      <Link
+                        href={`/${encodeURI(
+                          sanitizeUrl(item.article_category)
+                        )}/${encodeURI(sanitizeUrl(item.title))}`}
+                        imageHeight="h-72 md:h-[420px]"
+                        imageTitle={
+                          item.imageTitle || item.title || "Blog Image Title"
+                        }
+                      >
+                        <p
+                          className="text-md md:text-lg mt-2"
+                          dangerouslySetInnerHTML={{
+                            __html: `${item.tagline
+                              .split(" ")
+                              .slice(0, 10)
+                              .join(" ")}...`,
+                          }}
+                        />
+                      </Link>
+
+                      <div className="flex items-center gap-2 mt-2">
+                        <p className="text-sm font-semibold">
+                          <span className="text-gray-400 text-sm">By</span>:{" "}
+                          {item.author}
+                        </p>
+                        <p className="text-sm text-gray-400 font-semibold">
+                          {dayjs(item?.published_at)?.format("MMM D, YYYY")}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )
+            )}
+          </div>
+
+          {/* Sidebar */}
+          <div className="hidden md:block">
+            <Rightbar
+              about_me={about_me}
+              imagePath={imagePath}
+              categories={categories}
+              tag_list={tag_list}
+              blog_list={blog_list}
+            />
+          </div>
+        </div>
+      </FullContainer>
+
       <Footer />
     </div>
   );
@@ -128,9 +305,9 @@ export async function getServerSideProps({ req }) {
   // const testData=await downloadImages({domain, project_id});
   // console.log("👊 ~ getServerSideProps ~ testData:", testData)
   const about_me = await callBackendApi({ domain, type: "about_me" });
+  console.log("ABOUT US", about_me);
   const copyright = await callBackendApi({ domain, type: "copyright" });
   const banner = await callBackendApi({ domain, type: "banner" });
-  const layout = await callBackendApi({ domain, type: "layout" });
   const tag_list = await callBackendApi({ domain, type: "tag_list" });
   const nav_type = await callBackendApi({ domain, type: "nav_type" });
   let imagePath = null;
@@ -145,7 +322,6 @@ export async function getServerSideProps({ req }) {
       meta: meta?.data[0]?.value || null,
       favicon: favicon?.data[0]?.file_name || null,
       logo: logo?.data[0] || null,
-      layout: layout?.data[0]?.value || null,
       blog_list: blog_list?.data[0]?.value || [],
       categories: categories?.data[0]?.value || null,
       copyright: copyright?.data[0]?.value || null,

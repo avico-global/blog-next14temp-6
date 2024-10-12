@@ -42,10 +42,14 @@ export default function Footer({
             </div>
 
             <div className="lg:flex  text-center space-y-4 lg:space-y-0 items-center flex-wrap gap-5 lg:gap-10 font-bold mt-5 border-b border-gray-500 pb-6">
+              
               <p>About & Contact Details</p>
               <p>Terms & Conditions</p>
               <p>Privacy Policy</p>
-              <p>Cookie Policy</p>
+              <Link href="/about" >
+              
+              About
+              </Link>
               <p>Complaints</p>
               <p>Sitemap</p>
               <p>Advertising</p>

@@ -48,7 +48,7 @@ export default function Categories({
     const searchContent = category?.replaceAll("-", " ");
     return item.article_category.name.toLowerCase().includes(searchContent);
   });
-  const page = layout?.find((page) => page.page === "category");
+  // const page = layout?.find((page) => page.page === "category");
 
   return (
     <div
@@ -352,7 +352,8 @@ export async function getServerSideProps({ req, query }) {
   let imagePath = await getImagePath(project_id, domain);
 
   const categoryExists = categories?.data[0]?.value?.some(
-    (cat) => cat?.toLowerCase() === category?.replaceAll("-", " ").toLowerCase()
+    (cat) =>
+      cat?.title?.toLowerCase() === category?.replaceAll("-", " ").toLowerCase()
   );
 
   if (!categoryExists) {

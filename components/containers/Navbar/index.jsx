@@ -5,17 +5,11 @@ import Image from "next/image";
 import FullContainer from "@/components/common/FullContainer";
 import Container from "@/components/common/Container";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/router";
 
 // Static data for the navbar
 const logo = "/img/logo.png"; // Example static logo
-const categories = [
-  "Home",
-  "Feauture",
-  "Categories",
-  "Design",
-  "Post Styles",
-  "Shop",
-]; // Static categories
+
 const menuList = [
   "Home",
   "Feauture",
@@ -25,8 +19,14 @@ const menuList = [
   "Shop",
 ]; // Static menu list for the sidebar
 
-export default function Navbar({ searchContainerRef }) {
+export default function Navbar({
+  
+  categories,
+  category,
+ 
+}) {
   const [sidebar, setSidebar] = useState(false);
+ 
 
   return (
     <>
@@ -46,25 +46,16 @@ export default function Navbar({ searchContainerRef }) {
                 className="mt-1"
               />
             </Link>
-            <div
-              className="text-lg font-bold hidden lg:flex items-center gap-5"
-              ref={searchContainerRef}
-            >
-              {categories.map((item, index) => (
-                <Link
-                  title={item}
-                  key={index}
-                  href={`/${item.toLowerCase().replaceAll(" ", "-")}`}
-                  className={cn(
-                    "uppercase font-extrabold",
-                    false && "border-b-2 mt-[2px] border-purple-500" // Change this if dynamic category highlighting is needed
-                  )}
-                >
-                  {item}
-                </Link>
-              ))}
-            </div>
+
+            <Link href="/">Home</Link>
+            <Link href="#">Feautures</Link>
+            <Link title="" href="/our-blogs">Blogs</Link>
+          
+          
+          
+          
           </div>
+
           <div className=" hidden lg:flex ">
             <Search />
           </div>

@@ -1,59 +1,94 @@
 import React from "react";
-import dayjs from "dayjs";
-import Link from "next/link";
+import FullContainer from "../common/FullContainer";
+import Container from "../common/Container";
 import Image from "next/image";
-import SectionHeading from "../common/SectionHeading";
+import Link from "next/link";
+import { Badge } from "../ui/badge";
 
-export default function MustRead({ articles, imagePath }) {
-  const mustReadArticles = articles?.filter((item) => item.isMustRead);
-
+export default function MustRead({ blog_list = [], imagePath }) {
+  const mustReadBlogs = blog_list.filter((item) => item.isMustRead);
   return (
-    <div>
-      <SectionHeading title="MUST READ" className="mb-7" />
-      <div className="grid grid-cols-1 lg:grid-cols-4 grid-rows-2 gap-x-10 gap-y-3">
-        {mustReadArticles?.map((item, index) => (
-          <Link
-            href={`/${item?.article_category?.name
-              ?.toLowerCase()
-              ?.replaceAll(" ", "-")}/${item.title
-              ?.replaceAll(" ", "-")
-              ?.toLowerCase()}`}
-            title={item.imageTitle || "image"}
-            key={index}
-            className="lg:first:col-span-3 lg:first:row-span-3 flex flex-col   gap-2 first:gap-4 text-lg first:text-xl first:mb-5"
-          >
-            <div
-              className={`overflow-hidden relative min-h-40 lg:min-h-32 w-full bg-black rounded-md ${
-                index === 0 && "flex-1"
-              }`}
-            >
-              <Image
-                title={item.imageTitle || item.title || "Article Thumbnail"}
-                alt={item.altImage || item.tagline || "No Thumbnail Found"}
-                src={`${imagePath}/${item.image}`}
-                fill={true}
-                loading="lazy"
-                className="w-full h-full object-cover absolute top-0 scale-125"
-              />
+    mustReadBlogs?.length > 0 && (
+      <div style={{ backgroundColor: "rgb(19, 20, 24)" }}>
+        <div className=" text-white py-16 text-center mx-auto max-w-[1500px] ">
+          <div className="lg:border-t border-gray-100  py-9  ">
+            <h2 className="font-bold text-3xl lg:text-5xl -mt-16  ">Trending News</h2>
+            <h3 className="font-bold text-3xl mt-4  text-gray-500  px-6">
+              Must Read
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 w-full mt-11 mb-3">
+              {mustReadBlogs.map((item, index) => (
+                <BlogCard
+                  key={item.id || index}
+                  title={item.title}
+                  author={item.author}
+                  date={item.published_at}
+                  tagline={item.tagline}
+                  description={item.articleContent}
+                  image={`${imagePath}/${item.image || "no-image.png"}`}
+                  href={`/${item?.article_category
+                    ?.toLowerCase()
+                    ?.replaceAll(" ", "-")}/${item?.title
+                    ?.replaceAll(" ", "-")
+                    ?.toLowerCase()}`}
+                  category={item.article_category}
+                  imageTitle={item.imageTitle}
+                  altImage={item.altImage}
+                />
+              ))}
             </div>
-            <div>
-              <p className="font-bold text-center text-inherit leading-tight">
-                {item.title}
-              </p>
-              <div className="flex items-center justify-center gap-2 mt-1">
-                <p className="text-xs">
-                  <span className="text-gray-400 text-xs">By</span>:{" "}
-                  {item.author}
-                </p>
-                <span className="text-gray-400">--</span>
-                <p className="text-xs text-gray-400">
-                  {dayjs(item.published_at).format("MMM D, YYYY")}
-                </p>
-              </div>
-            </div>
-          </Link>
-        ))}
+          </div>
+        </div>
       </div>
+    )
+  );
+}
+
+function BlogCard({
+  title,
+  image,
+  href,
+  category,
+  imageTitle = "Article Thumbnail", // Default value
+  altImage = "No Thumbnail Found", // Default value
+  tagline,
+  date,
+}) {
+  return (
+    <div className="flex flex-col ">
+      <Link
+        href={href || "#"}
+        title={imageTitle}
+        className="relative overflow-hidden w-full h-[195px]"
+      >
+        <Image
+          src={image}
+          title={imageTitle}
+          alt={altImage || tagline}
+          priority={false}
+          width={400}
+          height={400}
+          layout="responsive"
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
+          className="w-full h-full object-cover hover:scale-110 transition-all duration-1000  "
+        />
+      </Link>
+
+      <Link className="mt-8" href={href || ""}>
+        <p className="font-semibold text-start text-xl text-gray-400 hover:text-green-600 duration-200">
+          {category}
+        </p>
+      </Link>
+
+      <Link className=" mt-4  " href={href || ""}>
+        <p className="font-semibold text-start leading-2 text-2xl hover:underline">
+          {title}
+        </p>
+      </Link>
+      <p className="font-semibold text-start text-gray-400  text-lg mt-2 hover:text-green-600 duration-500">
+        {date}
+      </p>
     </div>
   );
 }

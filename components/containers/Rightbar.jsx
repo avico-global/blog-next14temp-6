@@ -17,11 +17,11 @@ export default function Rightbar({
   blog_list = [],
   categories = [],
 }) {
-  const content = md.render(about_me.value || "");
+  const content = md.render(about_me?.value || "");
   const router = useRouter();
   const currentPath = router.asPath;
   const isActive = (path) => currentPath === path;
-  const lastFiveBlogs = blog_list.slice(-5);
+  const lastThreeBlogs = blog_list.slice(-3);
 
   const renderAbout = () => (
     <Link
@@ -113,13 +113,13 @@ export default function Rightbar({
     </div>
   );
 
-  const renderLatestPosts = () => (
+  const renderPopularPosts = () => (
     <div className="bg-white rounded-lg overflow-hidden shadow-lg">
       <div className="text-center border-purple-100 text-lg bg-purple-100 text-purple-600 shadow-purple-300 py-2 px-4 font-semibold capitalize">
-        Latest Posts
+        Trending Posts
       </div>
       <div className="p-2">
-        {lastFiveBlogs?.reverse().map((item, index) => (
+        {lastThreeBlogs?.reverse().map((item, index) => (
           <Link
             title={item.article_category.name}
             href={`/${item.article_category.name
@@ -171,8 +171,8 @@ export default function Rightbar({
             return categories.length > 0 && renderCategories();
           case "article tags":
             return tag_list.length > 0 && renderTags();
-          case "latest posts":
-            return lastFiveBlogs.length > 0 && renderLatestPosts();
+          case "popular posts":
+            return lastThreeBlogs.length > 0 && renderPopularPosts();
           default:
             return null;
         }
