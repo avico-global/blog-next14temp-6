@@ -175,6 +175,9 @@ export default function Blog({
               category={category}
               contact_details={contact_details}
               blog_list={blog_list}
+              widgets={
+                layout?.find((page) => page.page === "blog page")?.widgets
+              }
             />
           </div>
         </Container>

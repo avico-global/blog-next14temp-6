@@ -11,8 +11,10 @@ export default function MustRead({ blog_list = [], imagePath }) {
     mustReadBlogs?.length > 0 && (
       <div style={{ backgroundColor: "rgb(19, 20, 24)" }}>
         <div className=" text-white py-16 text-center mx-auto max-w-[1500px] ">
-          <div className="lg:border-t border-gray-100  py-9  ">
-            <h2 className="font-bold text-3xl lg:text-5xl -mt-16  ">Trending News</h2>
+          <div className="border-t pt-5 px-4 text-center py-10 w-full flex flex-col items-center ">
+          <h2 className="px-5 text-4xl text-center font-bold -mt-10  bg-bgg  w-fit">
+             Trending News
+            </h2>
             <h3 className="font-bold text-3xl mt-4  text-gray-500  px-6">
               Must Read
             </h3>

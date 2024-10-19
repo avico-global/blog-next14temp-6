@@ -112,9 +112,14 @@ export default function About({
                           />
                         </div>
                         <Rightbar
-                          page="about"
-                          contact_details={contact_details}
-                        />
+              widgets={page?.widgets}
+
+              about_me={about_me}
+              imagePath={imagePath}
+              blog_list={blog_list}
+              categories={categories}
+              contact_details={contact_details}
+            />
                       </div>
                     </Container>
                   </FullContainer>

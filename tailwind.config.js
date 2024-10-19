@@ -18,6 +18,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        bgg:"rgb(19, 20, 24)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

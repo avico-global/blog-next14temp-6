@@ -49,11 +49,11 @@ function BlogCard({
   date,
 }) {
   return (
-    <div className="flex  items-center text-start ">
+    <div className="flex  text-start ">
       <Link
         href={href || ""}
         title={imageTitle}
-        className="relative overflow-hidden lg:w-1/4 h-[175px]"
+        className="relative overflow-hidden lg:w-1/4 h-[150px]"
       >
         <Image
           src={image}

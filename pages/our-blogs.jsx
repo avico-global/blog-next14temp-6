@@ -28,8 +28,6 @@ export default function OurBlogs({
   category,
   about_me,
   contact_details,
-  tag_list,
-  layout,
 }) {
   return (
     <>
@@ -72,7 +70,9 @@ export default function OurBlogs({
                   tagline={item.tagline}
                   content={item.articleContent}
                   image={
-                    item.image ? `${imagePath}/${item.image}` : "/no-image.png"
+                    item.image && imagePath
+                      ? `${imagePath}/${item.image}`
+                      : "/no-image.png"
                   }
                   href={`/${item?.article_category?.name
                     ?.toLowerCase()

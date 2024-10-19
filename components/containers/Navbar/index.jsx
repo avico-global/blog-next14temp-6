@@ -19,14 +19,8 @@ const menuList = [
   "Shop",
 ]; // Static menu list for the sidebar
 
-export default function Navbar({
-  
-  categories,
-  category,
- 
-}) {
+export default function Navbar({ categories, category }) {
   const [sidebar, setSidebar] = useState(false);
- 
 
   return (
     <>
@@ -49,11 +43,10 @@ export default function Navbar({
 
             <Link href="/">Home</Link>
             <Link href="#">Feautures</Link>
-            <Link title="" href="/our-blogs">Blogs</Link>
-          
-          
-          
-          
+            <Link title="" href="/our-blogs">
+              Blogs
+            </Link>
+            <Link href="/about">About</Link>
           </div>
 
           <div className=" hidden lg:flex ">
@@ -62,6 +55,7 @@ export default function Navbar({
         </div>
       </div>
 
+      {/* SIDE BAR  */}
       <div
         className={`sidebar fixed top-0 left-0 h-screen flex flex-col justify-between bg-black text-white z-50 overflow-x-hidden p-10 lg:p-6 ${
           sidebar ? "open" : "-ml-96"

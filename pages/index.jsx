@@ -45,6 +45,7 @@ export default function Home({
   banner,
   favicon,
   tag_list,
+  layout,
 }) {
   useEffect(() => {
     fetch("/api/get-images")
@@ -75,7 +76,7 @@ export default function Home({
     }
   }, [category, router]);
 
-  // const page = layout?.find((page) => page.page === "home");
+  const page = layout?.find((page) => page.page === "home");
 
   return (
     <div className={`min-h-screen ${myFont.className}`}>
@@ -115,6 +116,7 @@ export default function Home({
       </Head>
 
       <Navbar />
+      
       <Banner blog_list={blog_list} imagePath={imagePath} />
 
       <MustRead blog_list={blog_list} imagePath={imagePath} />
@@ -275,6 +277,7 @@ export default function Home({
           {/* Sidebar */}
           <div className="hidden md:block">
             <Rightbar
+              widgets={page?.widgets}
               about_me={about_me}
               imagePath={imagePath}
               categories={categories}
@@ -305,7 +308,7 @@ export async function getServerSideProps({ req }) {
   // const testData=await downloadImages({domain, project_id});
   // console.log("👊 ~ getServerSideProps ~ testData:", testData)
   const about_me = await callBackendApi({ domain, type: "about_me" });
-  console.log("ABOUT US", about_me);
+  const layout = await callBackendApi({ domain, type: "layout" });
   const copyright = await callBackendApi({ domain, type: "copyright" });
   const banner = await callBackendApi({ domain, type: "banner" });
   const tag_list = await callBackendApi({ domain, type: "tag_list" });
@@ -322,6 +325,7 @@ export async function getServerSideProps({ req }) {
       meta: meta?.data[0]?.value || null,
       favicon: favicon?.data[0]?.file_name || null,
       logo: logo?.data[0] || null,
+      layout: layout?.data[0]?.value || null,
       blog_list: blog_list?.data[0]?.value || [],
       categories: categories?.data[0]?.value || null,
       copyright: copyright?.data[0]?.value || null,

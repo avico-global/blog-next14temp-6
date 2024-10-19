@@ -9,7 +9,7 @@ const myFont = Cormorant({ subsets: ["cyrillic"] });
 
 export default function AboutBanner({ image }) {
   return (
-    <FullContainer className=" min-h-[50vh] mx-auto max-w-[1500px] overflow-hidden p-10  lg:mt-20 text-white text-center">
+    <FullContainer className=" min-h-[50vh] mx-auto max-w-[1500px] overflow-hidden  lg:mt-10 text-white text-center">
       <Image
       title="About"
         src={image}
@@ -20,14 +20,6 @@ export default function AboutBanner({ image }) {
         className="-z-10 w-full h-full object-cover"
       />
       <Container className="gap-6">
-        <h1
-          className={cn(
-            "font-extrabold text-6xl capitalize max-w-screen-md",
-            myFont.className
-          )}
-        >
-          About Me
-        </h1>
       </Container>
     </FullContainer>
   );
