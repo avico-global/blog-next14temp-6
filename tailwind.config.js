@@ -18,16 +18,12 @@ module.exports = {
     },
     extend: {
       colors: {
-        bgg:"rgb(19, 20, 24)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
+        primary: "#131418",
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
@@ -81,6 +77,8 @@ module.exports = {
         widget: "0.5fr 1fr",
         widget1: "0.5fr 1fr",
         nav: "1fr 310px 1fr",
+        banner: "1fr 0.6fr",
+        bblog: "150px 1fr",
       },
     },
   },

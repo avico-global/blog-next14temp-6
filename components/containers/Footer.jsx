@@ -26,7 +26,7 @@ export default function Footer({
     window.location.href = "/sitemap.xml";
   };
   return (
-    <FullContainer className="bg-black text-white py-16">
+    <FullContainer className="bg-primary text-white py-16">
       <Container>
         <div className=" flex justify-center items-center md:text-sm  ">
           <div>

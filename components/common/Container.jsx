@@ -5,7 +5,7 @@ export default function Container({ children, className, style }) {
     <div
       style={style}
       className={cn(
-        "w-11/12 max-w-screen-xl 3xl:max-w-screen-2xl flex items-center justify-center flex-col bg-cover bg-center",
+        "w-11/12 max-w-screen-2xl flex items-center justify-center flex-col bg-cover bg-center",
         className
       )}
     >

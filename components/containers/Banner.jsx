@@ -1,12 +1,15 @@
 import React from "react";
 import Image from "next/image";
+import FullContainer from "../common/FullContainer";
+import Container from "../common/Container";
+import { sanitizeUrl } from "@/lib/myFun";
 import Link from "next/link";
-import MostPopular from "./MostPopular";
 
 export default function Banner({ image, data, blog_list, imagePath }) {
   return (
-    <div className="relative  lg:h-[70vh] flex flex-col lg:flex-row items-center justify-center lg:justify-between p-6 md:p-10  text-white">
-      <Image
+    <FullContainer>
+      <Container className="py-24">
+        <Image
           src={image}
           title={data.imageTitle || data.title || "Banner"}
           alt={data.altImage || data.tagline || "No Banner Found"}
@@ -26,19 +29,88 @@ export default function Banner({ image, data, blog_list, imagePath }) {
                (max-width: 3840px) 3840px,
                100vw"
         />
-      <div className="relative z-10 flex flex-col items-center lg:items-start space-y-4 md:space-y-6 mx-auto  my-14 max-w-[1400px]">
-        <h1 className={` font-bold capitalize text-5xl text-center lg:text-left`}>
-          {data?.title}
-        </h1>
-        {data?.tagline && (
-          <p className={` leading-tight text-2xl text-center lg:text-left`}>
-            {data?.tagline}
-          </p>
-        )}
-      
-      </div>
-      <div className="lg:w-1/3 h-64  hidden lg:flex justify-center items-center z-10 mt-6 lg:mt-0 mx-auto max-w-[1400px]">
-        <MostPopular blog_list={blog_list} imagePath={imagePath} />
+        <div className="w-full grid grid-cols-banner gap-16 text-white h-[50vh]">
+          <div className="relative flex flex-col justify-center">
+            <h1
+              className={` font-bold capitalize text-6xl leading-tight text-center lg:text-left`}
+            >
+              {data?.title}
+            </h1>
+            {data?.tagline && (
+              <p
+                className={` leading-tight text-2xl text-center lg:text-left mt-10`}
+              >
+                {data?.tagline}
+              </p>
+            )}
+          </div>
+          <div className="flex flex-col justify-center gap-10">
+            {blog_list
+              ?.slice(-3)
+              .reverse()
+              .map((item, index) => (
+                <BlogCard
+                  key={index}
+                  title={item.title}
+                  href={`/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+                    item?.title
+                  )}`}
+                  image={
+                    item.image ? `${imagePath}/${item.image}` : "/no-image.png"
+                  }
+                  author={item.author}
+                  date={item.published_at}
+                  imageTitle={item.imageTitle}
+                  altImage={item.altImage}
+                  tagline={item.tagline}
+                />
+              ))}
+          </div>
+        </div>
+      </Container>
+    </FullContainer>
+  );
+}
+
+function BlogCard({
+  title,
+  image,
+  href,
+  imageTitle,
+  altImage,
+  tagline,
+  date,
+  author,
+}) {
+  return (
+    <div className="grid grid-cols-bblog gap-5 group">
+      <Link
+        href={href || "#"}
+        title={imageTitle}
+        className="relative overflow-hidden w-full h-32 rounded-sm"
+      >
+        <Image
+          src={image}
+          title={title || imageTitle}
+          alt={altImage || tagline}
+          priority={false}
+          width={298}
+          height={195}
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
+          className="w-full h-full group-hover:scale-125 transition-all duration-300"
+          style={{ objectFit: "cover" }}
+        />
+      </Link>
+
+      <div className="flex flex-col justify-center">
+        <Link href={href || ""}>
+          <p className="text-xl font-semibold group-hover:underline">{title}</p>
+        </Link>
+        <div className="flex items-center gap-5 mt-2">
+          <p className="text-white/60">{author}</p> {" - "}
+          <p className="text-white/60">{date}</p>
+        </div>
       </div>
     </div>
   );

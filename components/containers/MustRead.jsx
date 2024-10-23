@@ -1,24 +1,24 @@
 import React from "react";
-import FullContainer from "../common/FullContainer";
-import Container from "../common/Container";
-import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "../ui/badge";
+import Image from "next/image";
+import Container from "../common/Container";
+import FullContainer from "../common/FullContainer";
+import { sanitizeUrl } from "@/lib/myFun";
 
 export default function MustRead({ blog_list = [], imagePath }) {
   const mustReadBlogs = blog_list.filter((item) => item.isMustRead);
   return (
     mustReadBlogs?.length > 0 && (
-      <div style={{ backgroundColor: "rgb(19, 20, 24)" }}>
-        <div className=" text-white py-16 text-center mx-auto max-w-[1500px] ">
-          <div className="border-t pt-5 px-4 text-center py-10 w-full flex flex-col items-center ">
-          <h2 className="px-5 text-4xl text-center font-bold -mt-10  bg-bgg  w-fit">
-             Trending News
+      <FullContainer className="bg-primary py-24">
+        <Container>
+          <div className="border-t border-gray-500 pt-5 text-center w-full flex flex-col items-center text-white">
+            <h2 className="px-6 text-4xl font-bold -mt-10 bg-primary w-fit">
+              Trending News
             </h2>
-            <h3 className="font-bold text-3xl mt-4  text-gray-500  px-6">
-              Must Read
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 w-full mt-11 mb-3">
+            <p className="mt-4 text-gray-400">
+              Stay updated with the most popular and timely stories.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-10 w-full mt-16">
               {mustReadBlogs.map((item, index) => (
                 <BlogCard
                   key={item.id || index}
@@ -28,11 +28,9 @@ export default function MustRead({ blog_list = [], imagePath }) {
                   tagline={item.tagline}
                   description={item.articleContent}
                   image={`${imagePath}/${item.image || "no-image.png"}`}
-                  href={`/${item?.article_category
-                    ?.toLowerCase()
-                    ?.replaceAll(" ", "-")}/${item?.title
-                    ?.replaceAll(" ", "-")
-                    ?.toLowerCase()}`}
+                  href={`/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+                    item?.title
+                  )}`}
                   category={item.article_category}
                   imageTitle={item.imageTitle}
                   altImage={item.altImage}
@@ -40,8 +38,8 @@ export default function MustRead({ blog_list = [], imagePath }) {
               ))}
             </div>
           </div>
-        </div>
-      </div>
+        </Container>
+      </FullContainer>
     )
   );
 }
@@ -51,13 +49,13 @@ function BlogCard({
   image,
   href,
   category,
-  imageTitle = "Article Thumbnail", // Default value
-  altImage = "No Thumbnail Found", // Default value
+  imageTitle = "Article Thumbnail",
+  altImage = "No Thumbnail Found",
   tagline,
   date,
 }) {
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col group">
       <Link
         href={href || "#"}
         title={imageTitle}
@@ -73,22 +71,20 @@ function BlogCard({
           layout="responsive"
           loading="lazy"
           sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
-          className="w-full h-full object-cover hover:scale-110 transition-all duration-1000  "
+          className="w-full h-full object-cover group-hover:scale-125 transition-all duration-300"
         />
       </Link>
 
-      <Link className="mt-8" href={href || ""}>
-        <p className="font-semibold text-start text-xl text-gray-400 hover:text-green-600 duration-200">
-          {category}
-        </p>
-      </Link>
+      <p className="text-start text-lg capitalize text-gray-400 hover:text-green-600 duration-200 mt-2">
+        {category}
+      </p>
 
-      <Link className=" mt-4  " href={href || ""}>
-        <p className="font-semibold text-start leading-2 text-2xl hover:underline">
+      <Link className="mt-2" href={href || ""}>
+        <p className="font-semibold text-start leading-2 text-xl group-hover:underline">
           {title}
         </p>
       </Link>
-      <p className="font-semibold text-start text-gray-400  text-lg mt-2 hover:text-green-600 duration-500">
+      <p className="text-start text-gray-400 text-lg mt-3 hover:text-green-600 duration-500">
         {date}
       </p>
     </div>

@@ -3,15 +3,11 @@ import React, { useEffect } from "react";
 // Components
 import Head from "next/head";
 import Banner from "@/components/containers/Banner";
-import Container from "@/components/common/Container";
 import FullContainer from "@/components/common/FullContainer";
 import GoogleTagManager from "@/lib/GoogleTagManager";
-import MostPopular from "@/components/containers/MostPopular";
 import Rightbar from "@/components/containers/Rightbar";
 import Footer from "@/components/containers/Footer";
-import JsonLd from "@/components/json/JsonLd";
 import { useRouter } from "next/router";
-import BlogCard from "@/components/common/BlogCard";
 
 import {
   callBackendApi,
@@ -22,16 +18,12 @@ import {
 } from "@/lib/myFun";
 
 // Font
-import { Raleway } from "next/font/google";
-import LatestBlogs from "@/components/containers/LatestBlogs";
 import MustRead from "@/components/containers/MustRead";
-import SectionHeading from "@/components/common/SectionHeading";
 import Link from "next/link";
 import dayjs from "dayjs";
 import Navbar from "@/components/containers/Navbar";
-const myFont = Raleway({
-  subsets: ["cyrillic", "cyrillic-ext", "latin", "latin-ext"],
-});
+import Container from "@/components/common/Container";
+import Image from "next/image";
 
 export default function Home({
   logo,
@@ -79,7 +71,7 @@ export default function Home({
   const page = layout?.find((page) => page.page === "home");
 
   return (
-    <div className={`min-h-screen ${myFont.className}`}>
+    <div>
       <Head>
         <meta charSet="UTF-8" />
         <title>{meta?.title}</title>
@@ -132,84 +124,83 @@ export default function Home({
 
       <MustRead blog_list={blog_list} imagePath={imagePath} />
 
-      <FullContainer className="py-20 mx-auto max-w-[1500px]">
-        <div className="  border-t-2 pt-5 px-4 text-center py-10 w-full flex flex-col items-center">
-          <h2 className="font-bold text-3xl md:text-5xl -mt-12 bg-white px-6 w-fit text-center">
-            Latest Posts
-          </h2>
-          <h3 className="font-bold text-lg md:text-xl mt-4 text-center text-gray-500 px-6">
-            Stay up-to-date
-          </h3>
-        </div>
+      <FullContainer className="py-20">
+        <Container>
+          <div className="border-t-2 pt-5 text-center py-14 w-full flex flex-col items-center">
+            <h2 className="px-6 text-4xl font-bold -mt-10 w-fit bg-gray-50">
+              Latest Posts
+            </h2>
+            <p className="mt-4 text-gray-400">
+              Get fresh insights and updates across all categories.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full px-3">
-          {/* Featured Post */}
-          <div className="col-span-1 md:col-span-2 flex flex-col gap-12">
-            {blog_list?.map(
-              (item, index) =>
-                item.isFeatured && (
-                  <div key={index} className="relative flex">
-                    <Link
-                    title={item.article_category || "category"}
-                      href={`/${encodeURI(
-                        sanitizeUrl(item.article_category)
-                      )}/${encodeURI(sanitizeUrl(item.title))}`}
-                      imageHeight="h-72 md:h-[420px]"
-                      imageTitle={
-                        item.imageTitle || item.title || "Blog Image Title"
-                      }
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full">
+            {/* Featured Post */}
+            <div className="col-span-1 md:col-span-2 flex flex-col gap-10">
+              {blog_list?.map(
+                (item, index) =>
+                  item.isFeatured && (
+                    <div
+                      key={index}
+                      className={`relative overflow-hidden group h-[60vh] w-full`}
                     >
-                      {/* Image Container */}
-                      <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden">
-                        <img
-                          src={
-                            item.image
-                              ? `${imagePath}/${item.image}`
-                              : "/no-image.png"
-                          }
-                          alt={
-                            item.altImage || item.tagline || "Article Thumbnail"
-                          }
-                          className="w-full h-full object-cover hover:scale-110 transition-all duration-1000"
-                          title={
-                            item.imageTitle || item.title || "Blog Image Title"
-                          }
+                      <Link
+                        key={index}
+                        href={`/${sanitizeUrl(item.article_category) || "#"}`}
+                        title={item.imageTitle}
+                        className="relative overflow-hidden w-full h-full"
+                      >
+                        <Image
+                          src={`${imagePath}/${item.image || "no-image.png"}`}
+                          title={item.imageTitle}
+                          alt={item.altImage || item.tagline}
+                          priority={false}
+                          width={298}
+                          height={195}
+                          loading="lazy"
+                          sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
+                          className="h-full min-w-full group-hover:scale-125 transition-all duration-1000"
+                          style={{ objectFit: "cover" }}
                         />
-                        {/* Text Overlay */}
-                        <div className="absolute inset-0 bg-black bg-opacity-50 space-y-6 lg:pb-20 p-6  lg:px-20 flex flex-col justify-end  text-white">
-                          <h2 className="text-lg md:text-xl font-bold">
-                            {item.article_category}
-                          </h2>
-                          <h2 className="text-2xl md:text-4xl font-bold mt-2">
+                      </Link>
+
+                      <div className="flex flex-col justify-end z-10 w-full right-0 bg-black/30 group-hover:bg-black/60 transition-all duration-500 md:w-auto gap-8 cursor-pointer absolute top-0 h-full text-white p-12 left-0">
+                        <Link
+                          className="uppercase text-sm font-semibold bg-white text-black py-0.5 px-3 w-fit"
+                          href={`/${sanitizeUrl(item.article_category) || "#"}`}
+                        >
+                          Featured
+                        </Link>
+
+                        <Link
+                          href={`/${sanitizeUrl(item.article_category) || "#"}`}
+                        >
+                          <h3 className="font-bold text-4xl max-w-xl group-hover:underline transition-all duration-500">
                             {item.title}
-                          </h2>
-                          <div className="flex items-center gap-2 mt-2">
-                            <p className="text-sm font-semibold">
-                              <span className="text-gray-400 text-sm">By</span>:{" "}
-                              {item.author}
-                            </p>
-                            <p className="text-sm text-gray-400 font-semibold">
-                              {dayjs(item?.published_at)?.format("MMM D, YYYY")}
-                            </p>
-                          </div>
+                          </h3>
+                        </Link>
+
+                        <div className="flex items-center text-gray-300 gap-5">
+                          <p>{item.author}</p>
+                          {"-"}
+                          <p>{item.published_at}</p>
                         </div>
                       </div>
-                    </Link>
-                  </div>
-                )
-            )}
+                    </div>
+                  )
+              )}
 
-            {/* Must Read Section */}
-            {blog_list?.map(
-              (item, index) =>
-                item.isMustRead && (
-                  <div
-                    key={index}
-                    className="flex flex-col md:flex-row gap-6 bg-white shadow-md "
-                  >
-                    <div className="flex-shrink-0 w-full md:w-1/2 h-[200px] md:h-[330px] overflow-hidden">
+              {/* Must Read Section */}
+              {blog_list?.map(
+                (item, index) =>
+                  item.isMustRead && (
+                    <div
+                      key={index}
+                      className="grid grid-cols-2 bg-white shadow-md group"
+                    >
                       <Link
-                    title={item.article_category || "category"}
+                        title={item.article_category || "category"}
                         href={`/${encodeURI(
                           sanitizeUrl(item.article_category)
                         )}/${encodeURI(sanitizeUrl(item.title))}`}
@@ -217,6 +208,7 @@ export default function Home({
                         imageTitle={
                           item.imageTitle || item.title || "Blog Image Title"
                         }
+                        className="relative overflow-hidden"
                       >
                         <img
                           src={
@@ -227,78 +219,61 @@ export default function Home({
                           alt={
                             item.altImage || item.tagline || "Article Thumbnail"
                           }
-                          className="w-full h-full object-cover hover:scale-110 transition-all duration-1000"
+                          className="w-full h-full object-cover group-hover:scale-125 transition-all duration-700"
                           title={
                             item.imageTitle || item.title || "Blog Image Title"
                           }
                         />
                       </Link>
-                    </div>
 
-                    <div className="flex flex-col justify-center gap-5 w-full md:w-2/3  py-2 px-4">
-                      <Link
-                        href={`/${encodeURI(
-                          sanitizeUrl(item.article_category)
-                        )}/${encodeURI(sanitizeUrl(item.title))}`}
-                        imageHeight="h-72 md:h-[420px]"
-                        imageTitle={
-                          item.imageTitle || item.title || "Blog Image Title"
-                        }
-                      >
-                        <h2 className="text-lg md:text-xl font-bold">
+                      <div className="flex flex-col justify-center p-8">
+                        <p className="text-lg md:text-xl font-semibold capitalize text-gray-400">
                           {item.article_category}
-                        </h2>
-
-                        <h2 className="text-2xl font-bold">{item.title}</h2>
-                      </Link>
-
-                      <Link
-                        href={`/${encodeURI(
-                          sanitizeUrl(item.article_category)
-                        )}/${encodeURI(sanitizeUrl(item.title))}`}
-                        imageHeight="h-72 md:h-[420px]"
-                        imageTitle={
-                          item.imageTitle || item.title || "Blog Image Title"
-                        }
-                      >
-                        <p
-                          className="text-md md:text-lg mt-2"
-                          dangerouslySetInnerHTML={{
-                            __html: `${item.tagline
-                              .split(" ")
-                              .slice(0, 10)
-                              .join(" ")}...`,
-                          }}
-                        />
-                      </Link>
-
-                      <div className="flex items-center gap-2 mt-2">
-                        <p className="text-sm font-semibold">
-                          <span className="text-gray-400 text-sm">By</span>:{" "}
-                          {item.author}
                         </p>
-                        <p className="text-sm text-gray-400 font-semibold">
-                          {dayjs(item?.published_at)?.format("MMM D, YYYY")}
+
+                        <Link
+                          href={`/${encodeURI(
+                            sanitizeUrl(item.article_category)
+                          )}/${encodeURI(sanitizeUrl(item.title))}`}
+                          title={item.title}
+                        >
+                          <h2 className="text-2xl font-bold mt-3 group-hover:underline">
+                            {item.title}
+                          </h2>
+                        </Link>
+
+                        <p className="mt-3 text-gray-500">
+                          {item.tagline?.slice(0, 100)}...
                         </p>
+
+                        <div className="flex items-center gap-2 mt-4">
+                          <p className="font-semibold">
+                            <span className="text-gray-400">By</span>:{" "}
+                            {item.author}
+                          </p>
+                          <p className=" text-gray-400 font-semibold">
+                            {dayjs(item?.published_at)?.format("MMM D, YYYY")}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )
-            )}
-          </div>
+                  )
+              )}
+            </div>
 
-          {/* Sidebar */}
-          <div className="block">
-            <Rightbar
-              widgets={page?.widgets}
-              about_me={about_me}
-              imagePath={imagePath}
-              categories={categories}
-              tag_list={tag_list}
-              blog_list={blog_list}
-            />
+            {/* Sidebar */}
+            <div className="block">
+              <Rightbar
+                widgets={page?.widgets}
+                about_me={about_me}
+                imagePath={imagePath}
+                categories={categories}
+                tag_list={tag_list}
+                blog_list={blog_list}
+              />
+            </div>
           </div>
-        </div>
+        </Container>
       </FullContainer>
 
       <Footer logo={logo} imagePath={imagePath} />
