@@ -115,15 +115,26 @@ export default function Home({
         />
       </Head>
 
-      <Navbar />
-      
-      <Banner blog_list={blog_list} imagePath={imagePath} />
+      <Navbar
+        logo={logo}
+        categories={categories}
+        blog_list={blog_list}
+        imagePath={imagePath}
+        nav_type={nav_type}
+      />
+
+      <Banner
+        data={banner.value}
+        image={`${imagePath}/${banner?.file_name}`}
+        blog_list={blog_list}
+        imagePath={imagePath}
+      />
 
       <MustRead blog_list={blog_list} imagePath={imagePath} />
 
       <FullContainer className="py-20 mx-auto max-w-[1500px]">
-        <div className="  py-9  ">
-          <h2 className="font-bold text-3xl md:text-5xl -mt-16 text-center">
+        <div className="  border-t-2 pt-5 px-4 text-center py-10 w-full flex flex-col items-center">
+          <h2 className="font-bold text-3xl md:text-5xl -mt-12 bg-white px-6 w-fit text-center">
             Latest Posts
           </h2>
           <h3 className="font-bold text-lg md:text-xl mt-4 text-center text-gray-500 px-6">
@@ -139,6 +150,7 @@ export default function Home({
                 item.isFeatured && (
                   <div key={index} className="relative flex">
                     <Link
+                    title={item.article_category || "category"}
                       href={`/${encodeURI(
                         sanitizeUrl(item.article_category)
                       )}/${encodeURI(sanitizeUrl(item.title))}`}
@@ -197,6 +209,7 @@ export default function Home({
                   >
                     <div className="flex-shrink-0 w-full md:w-1/2 h-[200px] md:h-[330px] overflow-hidden">
                       <Link
+                    title={item.article_category || "category"}
                         href={`/${encodeURI(
                           sanitizeUrl(item.article_category)
                         )}/${encodeURI(sanitizeUrl(item.title))}`}
@@ -275,7 +288,7 @@ export default function Home({
           </div>
 
           {/* Sidebar */}
-          <div className="hidden md:block">
+          <div className="block">
             <Rightbar
               widgets={page?.widgets}
               about_me={about_me}
@@ -288,7 +301,7 @@ export default function Home({
         </div>
       </FullContainer>
 
-      <Footer />
+      <Footer logo={logo} imagePath={imagePath} />
     </div>
   );
 }

@@ -152,7 +152,7 @@ export default function Blog({
 
       <FullContainer>
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-home gap-14 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-home1 gap-14 w-full py-8 ">
             <div className="">
               <article className="prose lg:prose-xl max-w-full">
                 <div dangerouslySetInnerHTML={{ __html: content }} />
@@ -184,6 +184,7 @@ export default function Blog({
       </FullContainer>
 
       <Footer
+      logo={logo}
         imagePath={imagePath}
         blog_list={blog_list}
         categories={categories}

@@ -12,26 +12,26 @@ import {
   Youtube,
   YoutubeIcon,
 } from "lucide-react";
+import Logo from "./Navbar/Logo";
 
 export default function Footer({
   logo,
+  imagePath,
   categories,
   category,
   searchContainerRef,
 }) {
+  const handleClick = (e) => {
+    e.preventDefault();
+    window.location.href = "/sitemap.xml";
+  };
   return (
     <FullContainer className="bg-black text-white py-16">
       <Container>
         <div className=" flex justify-center items-center md:text-sm  ">
           <div>
             <div className="flex justify-center items-center space-y-10 ">
-              <Image
-                height={150}
-                width={150}
-                alt="network"
-                src="/img/logo.png"
-                className="mt-10 "
-              />
+              <Logo logo={logo} imagePath={imagePath} />
             </div>
 
             <div className=" flex  justify-center items-center py-16 gap-6   ">
@@ -42,17 +42,50 @@ export default function Footer({
             </div>
 
             <div className="lg:flex  text-center space-y-4 lg:space-y-0 items-center flex-wrap gap-5 lg:gap-10 font-bold mt-5 border-b border-gray-500 pb-6">
-              
-              <p>About & Contact Details</p>
-              <p>Terms & Conditions</p>
-              <p>Privacy Policy</p>
-              <Link href="/about" >
-              
-              About
+              <Link
+                title="Home"
+                href="/"
+                className="uppercase text-sm hover:text-button w-fit transition-all"
+              >
+                Home
               </Link>
-              <p>Complaints</p>
-              <p>Sitemap</p>
-              <p>Advertising</p>
+              <Link
+                title="About"
+                href="/about"
+                className="uppercase text-sm mb-2 hover:text-button w-fit transition-all"
+              >
+                About
+              </Link>
+              <Link
+                title="Contact"
+                href="/contact"
+                className="uppercase text-sm mb-2 hover:text-button w-fit transition-all"
+              >
+                Contact
+              </Link>
+              <Link
+                title="Terms & Conditions"
+                href="/terms-and-conditions"
+                className="uppercase text-sm mb-2 hover:text-button w-fit transition-all"
+              >
+                Terms & Conditions
+              </Link>
+              <Link
+                title="Privacy Policy"
+                href="/privacy-policy"
+                className="uppercase text-sm mb-2 hover:text-button w-fit transition-all"
+              >
+                Privacy Policy
+              </Link>
+              <Link title="Sitemap" href="/sitemap.xml" legacyBehavior>
+                <a
+                  title="Sitemap"
+                  onClick={handleClick}
+                  className="uppercase text-sm mb-2 hover:text-button w-fit transition-all"
+                >
+                  Sitemap
+                </a>
+              </Link>
             </div>
           </div>
         </div>

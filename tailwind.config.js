@@ -74,10 +74,12 @@ module.exports = {
       },
       gridTemplateColumns: {
         home: "1fr 0.3fr",
+        home1: "0.8fr 0.4fr",
         article: "1fr 0.4fr",
         contact: "1fr 0.5fr",
-        about: "1fr 0.4fr",
+        about: "1fr 0.5fr",
         widget: "0.5fr 1fr",
+        widget1: "0.5fr 1fr",
         nav: "1fr 310px 1fr",
       },
     },

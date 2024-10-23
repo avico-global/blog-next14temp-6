@@ -6,10 +6,12 @@ import Footer from "@/components/containers/Footer";
 import Container from "@/components/common/Container";
 import GoogleTagManager from "@/lib/GoogleTagManager";
 import FullContainer from "@/components/common/FullContainer";
+import Breadcrumbs from "@/components/common/Breadcrumbs";
 
 import { callBackendApi, getDomain, getImagePath } from "@/lib/myFun";
 
 import { Roboto } from "next/font/google";
+import useBreadcrumbs from "@/lib/useBreadcrumbs";
 const myFont = Roboto({
   subsets: ["cyrillic"],
   weight: ["400", "700"],
@@ -18,7 +20,6 @@ const myFont = Roboto({
 export default function Contact({
   meta,
   logo,
-  layout,
   domain,
   favicon,
   nav_type,
@@ -28,19 +29,17 @@ export default function Contact({
   categories,
   contact_details,
 }) {
-  const page = layout?.find((item) => item.page === "contact");
+  const breadcrumbs = useBreadcrumbs();
 
   return (
     <div className={myFont.className}>
       <Head>
         <meta charSet="UTF-8" />
         <title> {meta?.title}</title>
-
         <meta name="description" content={meta?.description} />
         <link rel="author" href={`https://www.${domain}`} />
         <link rel="publisher" href={`https://www.${domain}`} />
         <link rel="canonical" href={`http://www.${domain}/contact`} />
-        {/* <meta name="robots" content="noindex" /> */}
         <meta name="theme-color" content="#008DE5" />
         <link rel="manifest" href="/manifest.json" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -69,59 +68,52 @@ export default function Contact({
         />
       </Head>
 
-      {page?.enable
-        ? page?.sections?.map((item, index) => {
-            if (!item.enable) return null;
+      {/* Navbar */}
+      <Navbar
+        blog_list={blog_list}
+        logo={logo}
+        nav_type={nav_type}
+        imagePath={imagePath}
+        categories={categories}
+        contact_details={contact_details}
+      />
+<FullContainer>
+        <Container>
+          <Breadcrumbs breadcrumbs={breadcrumbs} className="py-7" />
+          <h1 className="w-full text-3xl font-bold border-b ">Contact Us</h1>
+        </Container>
+      </FullContainer>
 
-            switch (item.section?.toLowerCase()) {
-              case "navbar":
-                return (
-                  <Navbar
-                    blog_list={blog_list}
-                    logo={logo}
-                    nav_type={nav_type}
-                    imagePath={imagePath}
-                    categories={categories}
-                    contact_details={contact_details}
-                  />
-                );
-              case "map":
-                return (
-                  <FullContainer>
-                    <Container className=" mt-16  lg:mt-40  ">
-                      <Map location="united states" />
-                    </Container>
-                  </FullContainer>
-                );
-              case "contact info":
-                return (
-                  <FullContainer>
-                    <Container className="mt-16">
-                      <div className="flex flex-col items-center text-center text-gray-500 text-xs gap-3">
-                        <p className="text-xl mt-3 font-bold text-black">
-                          {contact_details?.name}
-                        </p>
-                        <h1>{contact_details?.email}</h1>
-                        <h2>{contact_details?.address}</h2>
-                        <p>{contact_details?.phone}</p>
-                      </div>
-                    </Container>
-                  </FullContainer>
-                );
-              case "footer":
-                return (
-                  <Footer
-                    blog_list={blog_list}
-                    categories={categories}
-                    copyright={copyright}
-                    footer_text=""
-                    logo={logo}
-                    imagePath={imagePath}
-                  />
-                );
-            }
-          })
-        : "Page Disabled,under maintenance"}
+      {/* Map Section */}
+      <FullContainer>
+        <Container className=" mt-16 lg:mt-40">
+          <Map location="united states" />
+        </Container>
+      </FullContainer>
+
+      {/* Contact Info */}
+      <FullContainer>
+        <Container className="my-16">
+          <div className="flex flex-col items-center text-center text-gray-500 text-xs gap-3">
+            <p className="text-xl mt-3 font-bold text-black">
+              {contact_details?.name}
+            </p>
+            <h1>{contact_details?.email}</h1>
+            <h2>{contact_details?.address}</h2>
+            <p>{contact_details?.phone}</p>
+          </div>
+        </Container>
+      </FullContainer>
+
+      {/* Footer */}
+      <Footer
+        blog_list={blog_list}
+        categories={categories}
+        copyright={copyright}
+        footer_text=""
+        logo={logo}
+        imagePath={imagePath}
+      />
     </div>
   );
 }
@@ -142,12 +134,10 @@ export async function getServerSideProps({ req, query }) {
     type: "categories",
   });
   const meta = await callBackendApi({ domain, query, type: "meta_contact" });
-  const layout = await callBackendApi({ domain, type: "layout" });
   const nav_type = await callBackendApi({ domain, type: "nav_type" });
 
   let project_id = logo?.data[0]?.project_id || null;
-  let imagePath = null;
-  imagePath = await getImagePath(project_id, domain);
+  let imagePath = await getImagePath(project_id, domain);
 
   return {
     props: {
@@ -155,8 +145,7 @@ export async function getServerSideProps({ req, query }) {
       imagePath,
       logo: logo?.data[0],
       blog_list: blog_list.data[0].value,
-      layout: layout?.data[0]?.value || null,
-      contact_details: contact_details.data[0].value,
+      contact_details: contact_details.data[0]?.value || null,
       categories: categories?.data[0]?.value || null,
       meta: meta?.data[0]?.value || null,
       favicon: favicon?.data[0]?.file_name || null,

@@ -253,7 +253,7 @@ export async function getServerSideProps({ req, query }) {
       blog_list: blog_list?.data[0]?.value || [],
       categories: categories?.data[0]?.value || null,
       meta: meta?.data[0]?.value || null,
-      contact_details: contact_details?.data[0]?.value,
+      contact_details: contact_details?.data[0]?.value || null,
       terms: terms?.data[0]?.value || "",
       policy: policy?.data[0]?.value || "",
       nav_type: nav_type?.data[0]?.value || {},

@@ -10,7 +10,7 @@ export default function MostPopular({ blog_list = [], imagePath }) {
   return (
     popularBlogs?.length > 0 && (
       <FullContainer className="  text-center">
-        <div className=" border-gray-100 px-3 py-9 md:px-9">
+        <div className=" border-gray-100 px-3 py-9 ">
           <div className="grid  ">
             {popularBlogs.map((item, index) => (
               <BlogCard
@@ -60,7 +60,7 @@ function BlogCard({
           title={imageTitle}
           alt={altImage || tagline}
           priority={false}
-          width={298}
+          width={300}
           height={195}
           layout="responsive"
           loading="lazy"

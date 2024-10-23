@@ -99,7 +99,7 @@ export default function Rightbar({
     </div>
   );
 
-  const renderPopularPosts = () => (
+  const renderLatestPosts = () => (
     <div className=" pt-5 px-4 flex flex-col items-center">
       <h2 className="bg-white px-5 font-bold text-lg -mt-9 text-center">
         EDITOR&apos;S CHOICE
@@ -177,11 +177,11 @@ export default function Rightbar({
                 <React.Fragment key={item.name}>{renderTags()}</React.Fragment>
               )
             );
-          case "most popular":
+          case "latest posts":
             return (
               lastThreeBlogs.length > 0 && (
                 <React.Fragment key={item.name}>
-                  {renderPopularPosts()}
+                  {renderLatestPosts()}
                 </React.Fragment>
               )
             );

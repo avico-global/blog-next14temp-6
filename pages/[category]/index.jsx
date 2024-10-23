@@ -1,7 +1,12 @@
 import React from "react";
 import Head from "next/head";
 import Footer from "@/components/containers/Footer";
-import { callBackendApi, getDomain, getImagePath, sanitizeUrl } from "@/lib/myFun";
+import {
+  callBackendApi,
+  getDomain,
+  getImagePath,
+  sanitizeUrl,
+} from "@/lib/myFun";
 import GoogleTagManager from "@/lib/GoogleTagManager";
 import JsonLd from "@/components/json/JsonLd";
 import Image from "next/image";
@@ -66,13 +71,13 @@ export default function Categories({
 
       <FullContainer className="  py-8 bg-gray-100">
         <Container>
-
-        <h1 className="text-2xl font-semibold capitalize px-4 py-1">
-          {category?.replace("-", " ")}
-        </h1>
-        <Breadcrumbs breadcrumbs={[{ label: "Home", url: "/" }, { label: category }]} />
+          <h1 className="text-2xl font-semibold capitalize px-4 py-1">
+            {category?.replace("-", " ")}
+          </h1>
+          <Breadcrumbs
+            breadcrumbs={[{ label: "Home", url: "/" }, { label: category }]}
+          />
         </Container>
-
       </FullContainer>
 
       <FullContainer className="py-16">
@@ -91,9 +96,17 @@ export default function Categories({
                   >
                     <div className="overflow-hidden relative min-h-40 rounded lg:min-h-72 w-full bg-black flex-1">
                       <Image
-                        title={item.imageTitle || item.title || "Article Thumbnail"}
-                        alt={item.altImage || item.tagline || "No Thumbnail Found"}
-                        src={item.image ? `${imagePath}/${item.image}` : "/no-image.png"}
+                        title={
+                          item.imageTitle || item.title || "Article Thumbnail"
+                        }
+                        alt={
+                          item.altImage || item.tagline || "No Thumbnail Found"
+                        }
+                        src={
+                          item.image
+                            ? `${imagePath}/${item.image}`
+                            : "/no-image.png"
+                        }
                         fill={true}
                         loading="lazy"
                         className="w-full h-full object-cover absolute top-0 hover:scale-125 transition-all"
@@ -115,7 +128,8 @@ export default function Categories({
                   </Link>
                   <div className="flex items-center gap-2 mt-1">
                     <p className="text-sm font-semibold">
-                      <span className="text-gray-400 text-sm">By</span>: {item.author}
+                      <span className="text-gray-400 text-sm">By</span>:{" "}
+                      {item.author}
                     </p>
                     <span className="text-gray-400">--</span>
                     <p className="text-sm text-gray-400 font-semibold">
@@ -126,7 +140,9 @@ export default function Categories({
                     className="mt-1 markdown-content"
                     style={{ fontSize: 12 }}
                     dangerouslySetInnerHTML={{
-                      __html: markdownIt?.render(item?.articleContent).slice(0, 200),
+                      __html: markdownIt
+                        ?.render(item?.articleContent)
+                        .slice(0, 200),
                     }}
                   />
                 </div>
@@ -186,7 +202,11 @@ export async function getServerSideProps({ req, query }) {
 
   const logo = await callBackendApi({ domain, query, type: "logo" });
   const blog_list = await callBackendApi({ domain, query, type: "blog_list" });
-  const categories = await callBackendApi({ domain, query, type: "categories" });
+  const categories = await callBackendApi({
+    domain,
+    query,
+    type: "categories",
+  });
   const meta = await callBackendApi({ domain, query, type: "meta_category" });
   const about_me = await callBackendApi({ domain, query, type: "about_me" });
   const contact_details = await callBackendApi({

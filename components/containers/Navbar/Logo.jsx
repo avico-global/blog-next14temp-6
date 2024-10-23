@@ -62,7 +62,7 @@ const Logo = ({ logo, imagePath }) => {
 
   return (
     <Link
-      title={`Logo - ${hostName}`}
+      title={`Logo - ${hostName}` || "logo" }
       href="/"
       className="flex items-center justify-center mr-10"
     >
@@ -71,7 +71,7 @@ const Logo = ({ logo, imagePath }) => {
           height={dynamicLogoHeight}
           width={dynamicLogoWidth} // Always pass a numeric width
           src={imageSrc}
-          title={`Logo - ${hostName}`}
+          title={`Logo - ${hostName}` || "logo"}
           alt={`${logoText || "logo"} - ${hostName}`}
           sizes="(max-width: 768px) 100px, (max-width: 1200px) 150px, 200px"
           style={logoStyle}

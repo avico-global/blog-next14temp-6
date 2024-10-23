@@ -5,16 +5,16 @@ import GoogleTagManager from "@/lib/GoogleTagManager";
 import Container from "@/components/common/Container";
 import FullContainer from "@/components/common/FullContainer";
 import Banner from "@/components/containers/Banner";
+import BlogCard from "@/components/common/BlogCard";
 import Footer from "@/components/containers/Footer";
-
 import {
   callBackendApi,
   getDomain,
   getImagePath,
   robotsTxt,
 } from "@/lib/myFun";
-
 import Rightbar from "@/components/containers/Rightbar";
+
 import MostPopular from "@/components/containers/MostPopular";
 import JsonLd from "@/components/json/JsonLd";
 import MustRead from "@/components/containers/MustRead";
@@ -28,6 +28,8 @@ export default function OurBlogs({
   category,
   about_me,
   contact_details,
+  tag_list,
+  layout,
 }) {
   return (
     <>
@@ -70,9 +72,7 @@ export default function OurBlogs({
                   tagline={item.tagline}
                   content={item.articleContent}
                   image={
-                    item.image && imagePath
-                      ? `${imagePath}/${item.image}`
-                      : "/no-image.png"
+                    item.image ? `${imagePath}/${item.image}` : "/no-image.png"
                   }
                   href={`/${item?.article_category?.name
                     ?.toLowerCase()
@@ -252,7 +252,7 @@ export async function getServerSideProps({ req }) {
       categories: categories?.data[0]?.value || null,
       copyright: copyright?.data[0]?.value || null,
       about_me: about_me?.data[0] || null,
-      banner: banner?.data[0] || null,
+      banner: banner?.data[0],
       contact_details: contact_details?.data[0]?.value || null,
       nav_type: nav_type?.data[0]?.value || {},
       tag_list: tag_list?.data[0]?.value || null,
