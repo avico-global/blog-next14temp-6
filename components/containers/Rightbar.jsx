@@ -48,7 +48,7 @@ export default function Rightbar({
 
   const renderCategories = () => (
     <div className="border p-5 flex flex-col items-center text-center">
-      <h2 className="bg-white px-5 font-bold text-lg -mt-9">Categories</h2>
+      <h2 className="bg-secondary px-5 font-bold text-lg -mt-9">Categories</h2>
       <div className="flex flex-col w-full text-left px-2 py-4">
         {categories.map((item, index) => (
           <Link
@@ -71,7 +71,9 @@ export default function Rightbar({
 
   const renderTags = () => (
     <div className="border pt-5 px-4 flex flex-col items-center text-center">
-      <h2 className="bg-gray-50 px-5 font-bold text-lg -mt-9">Article Tags</h2>
+      <h2 className="bg-secondary px-5 font-bold text-lg -mt-9">
+        Article Tags
+      </h2>
       <div className="flex items-center flex-wrap w-full text-left px-2 py-4 gap-2">
         {tag_list?.slice(0, 10)?.map((item, index) => (
           <Link
@@ -101,7 +103,7 @@ export default function Rightbar({
 
   const renderLatestPosts = () => (
     <div className="pt-5 flex flex-col items-center">
-      <h2 className="bg-white px-5 font-bold text-lg -mt-9 text-center">
+      <h2 className="bg-secondary px-5 font-bold text-lg -mt-9 text-center">
         EDITOR&apos;S CHOICE
       </h2>
       <div className="flex flex-col mt-6 gap-6">
@@ -150,7 +152,7 @@ export default function Rightbar({
   );
 
   return (
-    <div className="h-fit sticky top-0 flex flex-col gap-14">
+    <div className="h-fit sticky top-36 flex flex-col gap-14">
       {widgets.map((item, index) => {
         if (!item.enable) return null;
 

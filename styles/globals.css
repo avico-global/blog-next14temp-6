@@ -70,12 +70,29 @@
   * {
     @apply border-border text-[15px];
   }
+
   body {
-    @apply bg-gray-50 text-foreground;
+    @apply bg-secondary text-foreground;
   }
 }
 
 .about_me h1 {
   font-size: 50px;
   margin-bottom: 0;
+}
+
+.group-hover-underline-animation {
+  @apply inline-block relative;
+}
+
+.group-hover-underline-animation::after {
+  content: '';
+  @apply absolute w-full h-0.5 bottom-0 left-0 bg-primary;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease-out;
+}
+
+.group:hover .group-hover-underline-animation::after {
+  transform: scaleX(1);
 }

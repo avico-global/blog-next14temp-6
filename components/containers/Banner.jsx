@@ -87,7 +87,8 @@ function BlogCard({
       <Link
         href={href || "#"}
         title={imageTitle}
-        className="relative overflow-hidden w-full h-32"
+        className="relative overflow-hidden w-full h-32
+        "
       >
         <Image
           src={image}
@@ -105,7 +106,9 @@ function BlogCard({
 
       <div className="flex flex-col justify-center">
         <Link href={href || ""}>
-          <p className="text-xl font-semibold group-hover:underline">{title}</p>
+          <p className="text-xl font-semibold group-hover-underline-animation">
+            {title}
+          </p>
         </Link>
         <div className="flex items-center gap-5 mt-2">
           <p className="text-white/60">{author}</p> {" - "}

@@ -16,11 +16,9 @@ import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import Link from "next/link";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
-import MarkdownIt from "markdown-it";
 import Rightbar from "@/components/containers/Rightbar";
 import Navbar from "@/components/containers/Navbar";
-
-const markdownIt = new MarkdownIt();
+import { Badge } from "@/components/ui/badge";
 
 export default function Categories({
   logo,
@@ -68,18 +66,18 @@ export default function Categories({
         contact_details={contact_details}
       />
 
-      <FullContainer className="  py-8 bg-gray-100">
+      <FullContainer className="py-10 mb-10">
         <Container>
           <Breadcrumbs
             breadcrumbs={[{ label: "Home", url: "/" }, { label: category }]}
           />
-          <h1 className="text-2xl font-semibold capitalize px-4 py-1">
+          <h1 className="text-4xl font-semibold capitalize pb-8 pt-5 w-full">
             Exploring: {category?.replace("-", " ")}
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-home gap-12 w-full">
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="w-full flex flex-col gap-10">
               {filteredBlogList.map((item, index) => (
-                <div key={index}>
+                <div key={index} className="group flex flex-col gap-5">
                   <Link
                     title={item?.title || "Article Link"}
                     href={`/${category
@@ -88,7 +86,7 @@ export default function Categories({
                       ?.replaceAll(" ", "-")
                       ?.toLowerCase()}`}
                   >
-                    <div className="overflow-hidden relative min-h-40 rounded lg:min-h-72 w-full bg-black flex-1">
+                    <div className="overflow-hidden relative min-h-40 rounded lg:min-h-[500px] w-full bg-black flex-1">
                       <Image
                         title={
                           item.imageTitle || item.title || "Article Thumbnail"
@@ -103,10 +101,12 @@ export default function Categories({
                         }
                         fill={true}
                         loading="lazy"
-                        className="w-full h-full object-cover absolute top-0 hover:scale-125 transition-all"
+                        className="w-full h-full object-cover absolute top-0 group-hover:scale-125 duration-700 transition-all"
                       />
                     </div>
                   </Link>
+
+                  <Badge>{item.article_category}</Badge>
 
                   <Link
                     title={item?.title || "Article Link"}
@@ -116,10 +116,12 @@ export default function Categories({
                       ?.replaceAll(" ", "-")
                       ?.toLowerCase()}`}
                   >
-                    <h2 className="mt-2 lg:mt-3 font-bold text-lg text-inherit leading-tight">
+                    <h2 className="font-bold text-3xl text-inherit leading-tight group-hover-underline-animation">
                       {item.title}
                     </h2>
                   </Link>
+                  <p className="text-gray-500">{item?.articleContent}</p>
+
                   <div className="flex items-center gap-2 mt-1">
                     <p className="text-sm font-semibold">
                       <span className="text-gray-400 text-sm">By</span>:{" "}
@@ -130,15 +132,6 @@ export default function Categories({
                       {dayjs(item?.published_at)?.format("MMM D, YYYY")}
                     </p>
                   </div>
-                  <p
-                    className="mt-1 markdown-content"
-                    style={{ fontSize: 12 }}
-                    dangerouslySetInnerHTML={{
-                      __html: markdownIt
-                        ?.render(item?.articleContent)
-                        .slice(0, 200),
-                    }}
-                  />
                 </div>
               ))}
             </div>
