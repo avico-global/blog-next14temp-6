@@ -61,9 +61,9 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
 
   return (
     <>
-      <FullContainer className="bg-primary text-white">
+      <FullContainer className="bg-primary text-white sticky top-0 z-20">
         <Container>
-          <div className="flex items-center justify-between gap-3 mx-auto p-6 w-full">
+          <div className="flex items-center justify-between gap-3 mx-auto py-5 w-full">
             <div className="flex items-center gap-6">
               <Menu
                 onClick={() => setSidebar(true)}
@@ -73,7 +73,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
               <Logo logo={logo} imagePath={imagePath} />
             </div>
 
-            <nav className="hidden lg:flex items-center gap-5">
+            <nav className="hidden lg:flex items-center gap-5 uppercase">
               <Link href="/" title="Home" className="hover:text-gray-300">
                 Home
               </Link>
@@ -83,7 +83,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                 onMouseLeave={() => setIsDropdownOpen(false)}
               >
                 <button
-                  className="hover:text-gray-300"
+                  className="hover:text-gray-300 uppercase"
                   aria-expanded={isDropdownOpen}
                   aria-controls="categoriesDropdown"
                 >
@@ -93,7 +93,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                 {isDropdownOpen && (
                   <div
                     id="categoriesDropdown"
-                    className="absolute left-0 top-full bg-bgg text-white shadow-xl rounded-md z-50 p-2 w-[300px] grid grid-cols-1"
+                    className="absolute left-0 top-full bg-primary text-white shadow-xl rounded-md z-50 p-2 w-[300px] grid grid-cols-1"
                   >
                     {categories.map((category, index) => (
                       <Link
@@ -120,10 +120,10 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                 )}
               </div>
               <Link href="/contact" className="hover:text-gray-300">
-                Contacts
+                Contact Us
               </Link>
               <Link href="/about" className="hover:text-gray-300">
-                About
+                About Us
               </Link>
             </nav>
 

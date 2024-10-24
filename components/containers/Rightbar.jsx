@@ -71,7 +71,7 @@ export default function Rightbar({
 
   const renderTags = () => (
     <div className="border pt-5 px-4 flex flex-col items-center text-center">
-      <h2 className="bg-white px-5 font-bold text-lg -mt-9">Article Tags</h2>
+      <h2 className="bg-gray-50 px-5 font-bold text-lg -mt-9">Article Tags</h2>
       <div className="flex items-center flex-wrap w-full text-left px-2 py-4 gap-2">
         {tag_list?.slice(0, 10)?.map((item, index) => (
           <Link
@@ -100,51 +100,47 @@ export default function Rightbar({
   );
 
   const renderLatestPosts = () => (
-    <div className=" pt-5 px-4 flex flex-col items-center">
+    <div className="pt-5 flex flex-col items-center">
       <h2 className="bg-white px-5 font-bold text-lg -mt-9 text-center">
         EDITOR&apos;S CHOICE
       </h2>
-      <div className="flex flex-col my-3">
+      <div className="flex flex-col mt-6 gap-6">
         {lastThreeBlogs.map((item, index) => (
-          <div
-            key={index}
-            className="grid grid-cols-widget gap-3 py-3 border-b last:border-none"
-          >
+          <div key={index} className="grid grid-cols-bblog gap-5 group">
             <Link
-              title={item.title || "Article"}
-              href={`/${encodeURI(
-                sanitizeUrl(item.article_category)
-              )}/${encodeURI(sanitizeUrl(item.title))}`}
+              href={`/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+                item?.title
+              )}`}
+              title={item.title}
+              className="relative overflow-hidden w-full h-32"
             >
-              <div className="overflow-hidden relative min-h-36 w-full bg-black flex-1 rounded">
-                <Image
-                  title={item?.imageTitle || item?.title || "Article Thumbnail"}
-                  alt={item?.tagline || item?.altText || "Article Thumbnail"}
-                  src={
-                    item.image ? `${imagePath}/${item.image}` : "/no-image.png"
-                  }
-                  fill
-                  loading="lazy"
-                  className="object-cover hover:scale-125 transition-all"
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
+              <Image
+                src={`${imagePath}/${item.image}`}
+                title={item.title}
+                alt={item.tagline || item.altText}
+                priority={false}
+                width={298}
+                height={195}
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
+                className="w-full h-full group-hover:scale-125 transition-all duration-300"
+                style={{ objectFit: "cover" }}
+              />
             </Link>
 
-            <div>
+            <div className="flex flex-col justify-center">
               <Link
-                title={item.title || "Article Link"}
-                href={`/${encodeURI(
-                  sanitizeUrl(item.article_category)
-                )}/${encodeURI(sanitizeUrl(item.title))}`}
+                href={`/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+                  item?.title
+                )}`}
               >
-                <p className="font-semibold leading-tight hover:underline">
+                <p className="text-xl font-semibold group-hover:underline">
                   {item.title}
                 </p>
               </Link>
-              <div className="flex items-center gap-2 mt-1 justify-between text-gray-500">
-                <p className="text-xs">{item.author}</p>
-                <p className="text-xs whitespace-nowrap">{item.published_at}</p>
+              <div className="flex items-center gap-5 mt-2">
+                <p className="text-gray-500">{item.author}</p> {" - "}
+                <p className="text-gray-500">{item.date}</p>
               </div>
             </div>
           </div>

@@ -15,7 +15,6 @@ import Container from "@/components/common/Container";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import MarkdownIt from "markdown-it";
 import Rightbar from "@/components/containers/Rightbar";
@@ -71,17 +70,12 @@ export default function Categories({
 
       <FullContainer className="  py-8 bg-gray-100">
         <Container>
-          <h1 className="text-2xl font-semibold capitalize px-4 py-1">
-            {category?.replace("-", " ")}
-          </h1>
           <Breadcrumbs
             breadcrumbs={[{ label: "Home", url: "/" }, { label: category }]}
           />
-        </Container>
-      </FullContainer>
-
-      <FullContainer className="py-16">
-        <Container>
+          <h1 className="text-2xl font-semibold capitalize px-4 py-1">
+            Exploring: {category?.replace("-", " ")}
+          </h1>
           <div className="grid grid-cols-1 md:grid-cols-home gap-12 w-full">
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10">
               {filteredBlogList.map((item, index) => (

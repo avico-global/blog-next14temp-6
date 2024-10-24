@@ -78,7 +78,7 @@ module.exports = {
         widget1: "0.5fr 1fr",
         nav: "1fr 310px 1fr",
         banner: "1fr 0.6fr",
-        bblog: "150px 1fr",
+        bblog: "120px 1fr",
       },
     },
   },

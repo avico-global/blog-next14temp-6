@@ -38,7 +38,7 @@ export default function Banner({ image, data, blog_list, imagePath }) {
             </h1>
             {data?.tagline && (
               <p
-                className={` leading-tight text-2xl text-center lg:text-left mt-10`}
+                className={`leading-tight text-xl text-white/80 text-center lg:text-left mt-10`}
               >
                 {data?.tagline}
               </p>
@@ -87,7 +87,7 @@ function BlogCard({
       <Link
         href={href || "#"}
         title={imageTitle}
-        className="relative overflow-hidden w-full h-32 rounded-sm"
+        className="relative overflow-hidden w-full h-32"
       >
         <Image
           src={image}
