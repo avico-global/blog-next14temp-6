@@ -73,7 +73,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
               <Logo logo={logo} imagePath={imagePath} />
             </div>
 
-            <nav className="flex items-center gap-5">
+            <nav className="hidden lg:flex items-center gap-5">
               <Link href="/" title="Home" className="hover:text-gray-300">
                 Home
               </Link>

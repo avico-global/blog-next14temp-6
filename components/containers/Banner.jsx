@@ -7,18 +7,17 @@ import Link from "next/link";
 
 export default function Banner({ image, data, blog_list, imagePath }) {
   return (
-    <FullContainer>
-      <Container className="py-24">
-        <Image
-          src={image}
-          title={data.imageTitle || data.title || "Banner"}
-          alt={data.altImage || data.tagline || "No Banner Found"}
-          priority={true}
-          fill={true}
-          loading="eager"
-          className="-z-10 w-full h-52  "
-          style={{ objectFit: "cover" }}
-          sizes="(max-width: 320px) 320px,
+    <FullContainer className="relative overflow-hidden">
+      <Image
+        src={image}
+        title={data.imageTitle || data.title || "Banner"}
+        alt={data.altImage || data.tagline || "No Banner Found"}
+        priority={true}
+        fill={true}
+        loading="eager"
+        className="-z-10 w-full h-52  "
+        style={{ objectFit: "cover" }}
+        sizes="(max-width: 320px) 320px,
                (max-width: 480px) 480px,
                (max-width: 768px) 768px,
                (max-width: 1024px) 1024px,
@@ -28,11 +27,12 @@ export default function Banner({ image, data, blog_list, imagePath }) {
                (max-width: 2560px) 2560px,
                (max-width: 3840px) 3840px,
                100vw"
-        />
-        <div className="w-full grid grid-cols-banner gap-16 text-white h-[50vh]">
+      />
+      <Container className="py-24">
+        <div className="w-full grid grid-cols-1  md:grid-cols-banner gap-16 text-white lg:h-[50vh]">
           <div className="relative flex flex-col justify-center">
             <h1
-              className={` font-bold capitalize text-6xl leading-tight text-center lg:text-left`}
+              className={` font-bold capitalize text-5xl md:text-5xl lg:text-6xl leading-tight text-center lg:text-left`}
             >
               {data?.title}
             </h1>
