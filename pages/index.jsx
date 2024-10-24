@@ -18,12 +18,12 @@ import {
 } from "@/lib/myFun";
 
 // Font
-import MustRead from "@/components/containers/MustRead";
 import Link from "next/link";
 import dayjs from "dayjs";
 import Navbar from "@/components/containers/Navbar";
 import Container from "@/components/common/Container";
 import Image from "next/image";
+import TrendingNews from "@/components/containers/TrendingNews";
 
 export default function Home({
   logo,
@@ -122,7 +122,7 @@ export default function Home({
         imagePath={imagePath}
       />
 
-      <MustRead blog_list={blog_list} imagePath={imagePath} />
+      <TrendingNews blog_list={blog_list} imagePath={imagePath} />
 
       <FullContainer className="py-20">
         <Container>
@@ -166,20 +166,20 @@ export default function Home({
                       </Link>
 
                       <div className="flex flex-col justify-end z-10 w-full right-0 bg-black/30 group-hover:bg-black/60 transition-all duration-500 md:w-auto gap-8 cursor-pointer absolute top-0 h-full text-white p-12 left-0">
-                        <Link
-                          className="uppercase text-sm font-semibold bg-white text-black py-0.5 px-3 w-fit"
-                          href={`/${sanitizeUrl(item.article_category) || "#"}`}
-                        >
+                        <p className="uppercase text-sm font-semibold bg-white text-black py-0.5 px-3 w-fit">
                           Featured
-                        </Link>
+                        </p>
 
-                        <Link
-                          href={`/${sanitizeUrl(item.article_category) || "#"}`}
-                        >
-                          <h3 className="font-bold text-4xl max-w-xl group-hover:underline transition-all duration-500">
+                        <div className="max-w-2xl">
+                          <Link
+                            href={`/${
+                              sanitizeUrl(item.article_category) || "#"
+                            }`}
+                            className="font-medium text-4xl underline-white leading-tight"
+                          >
                             {item.title}
-                          </h3>
-                        </Link>
+                          </Link>
+                        </div>
 
                         <div className="flex items-center text-gray-300 gap-5">
                           <p>{item.author}</p>
@@ -219,7 +219,7 @@ export default function Home({
                           alt={
                             item.altImage || item.tagline || "Article Thumbnail"
                           }
-                          className="w-full h-full object-cover group-hover:scale-125 transition-all duration-700"
+                          className="w-full h-full object-cover group-hover:scale-125 transition-all duration-1000"
                           title={
                             item.imageTitle || item.title || "Blog Image Title"
                           }
@@ -227,31 +227,32 @@ export default function Home({
                       </Link>
 
                       <div className="flex flex-col justify-center p-8">
-                        <p className="text-lg md:text-xl font-semibold capitalize text-gray-400">
+                        <p className="text-lg font-medium capitalize text-gray-400">
                           {item.article_category}
                         </p>
 
-                        <Link
-                          href={`/${encodeURI(
-                            sanitizeUrl(item.article_category)
-                          )}/${encodeURI(sanitizeUrl(item.title))}`}
-                          title={item.title}
-                        >
-                          <h2 className="text-2xl font-bold mt-3 group-hover:underline">
+                        <div className="mt-4">
+                          <Link
+                            href={`/${encodeURI(
+                              sanitizeUrl(item.article_category)
+                            )}/${encodeURI(sanitizeUrl(item.title))}`}
+                            title={item.title}
+                            className="text-2xl font-semibold underline-white"
+                          >
                             {item.title}
-                          </h2>
-                        </Link>
+                          </Link>
+                        </div>
 
-                        <p className="mt-3 text-gray-500">
+                        <p className="mt-2 text-gray-500">
                           {item.tagline?.slice(0, 100)}...
                         </p>
 
-                        <div className="flex items-center gap-2 mt-4">
-                          <p className="font-semibold">
+                        <div className="flex items-center gap-2 mt-5">
+                          <p className="font-medium">
                             <span className="text-gray-400">By</span>:{" "}
                             {item.author}
                           </p>
-                          <p className=" text-gray-400 font-semibold">
+                          <p className=" text-gray-400 font-medium">
                             {dayjs(item?.published_at)?.format("MMM D, YYYY")}
                           </p>
                         </div>

@@ -32,13 +32,13 @@ export default function Banner({ image, data, blog_list, imagePath }) {
         <div className="w-full grid grid-cols-1  md:grid-cols-banner gap-16 text-white lg:h-[50vh]">
           <div className="relative flex flex-col justify-center">
             <h1
-              className={` font-bold capitalize text-5xl md:text-5xl lg:text-6xl leading-tight text-center lg:text-left`}
+              className={`font-medium capitalize text-5xl md:text-5xl lg:text-6xl leading-tight text-center lg:text-left`}
             >
               {data?.title}
             </h1>
             {data?.tagline && (
               <p
-                className={`leading-tight text-xl text-white/80 text-center lg:text-left mt-10`}
+                className={`leading-tight text-white/70 text-center lg:text-left mt-10`}
               >
                 {data?.tagline}
               </p>
@@ -99,17 +99,20 @@ function BlogCard({
           height={195}
           loading="lazy"
           sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
-          className="w-full h-full group-hover:scale-125 transition-all duration-300"
+          className="w-full h-full group-hover:scale-150 transition-all duration-700"
           style={{ objectFit: "cover" }}
         />
       </Link>
 
       <div className="flex flex-col justify-center">
-        <Link href={href || ""}>
-          <p className="text-xl font-semibold group-hover-underline-animation">
+        <div>
+          <Link
+            href={href || ""}
+            className="text-xl font-medium underline-white"
+          >
             {title}
-          </p>
-        </Link>
+          </Link>
+        </div>
         <div className="flex items-center gap-5 mt-2">
           <p className="text-white/60">{author}</p> {" - "}
           <p className="text-white/60">{date}</p>

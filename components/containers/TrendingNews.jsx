@@ -5,7 +5,7 @@ import Container from "../common/Container";
 import FullContainer from "../common/FullContainer";
 import { sanitizeUrl } from "@/lib/myFun";
 
-export default function MustRead({ blog_list = [], imagePath }) {
+export default function TrendingNews({ blog_list = [], imagePath }) {
   const mustReadBlogs = blog_list.filter((item) => item.isMustRead);
   return (
     mustReadBlogs?.length > 0 && (
@@ -55,7 +55,7 @@ function BlogCard({
   date,
 }) {
   return (
-    <div className="flex flex-col group">
+    <div className="flex flex-col gap-4 group">
       <Link
         href={href || "#"}
         title={imageTitle}
@@ -71,20 +71,24 @@ function BlogCard({
           layout="responsive"
           loading="lazy"
           sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
-          className="w-full h-full object-cover group-hover:scale-125 transition-all duration-300"
+          className="w-full h-full object-cover group-hover:scale-125 transition-all duration-700"
         />
       </Link>
 
-      <p className="text-start text-lg capitalize text-gray-400 hover:text-green-600 duration-200 mt-2">
+      <p className="text-start text-lg capitalize text-gray-400 hover:text-green-600 duration-200">
         {category}
       </p>
 
-      <Link className="mt-2" href={href || ""}>
-        <p className="font-semibold text-start leading-2 text-xl group-hover:underline">
+      <span className="w-full text-left">
+        <Link
+          href={href || ""}
+          className="font-medium text-left leading-2 text-xl underline-white"
+        >
           {title}
-        </p>
-      </Link>
-      <p className="text-start text-gray-400 text-lg mt-3 hover:text-green-600 duration-500">
+        </Link>
+      </span>
+
+      <p className="text-start text-gray-400 text-lg hover:text-green-600 duration-500">
         {date}
       </p>
     </div>

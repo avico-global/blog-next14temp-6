@@ -47,7 +47,7 @@ export default function Rightbar({
   );
 
   const renderCategories = () => (
-    <div className="border p-5 flex flex-col items-center text-center">
+    <div className="border p-5 flex flex-col items-center text-center mt-4">
       <h2 className="bg-secondary px-5 font-bold text-lg -mt-9">Categories</h2>
       <div className="flex flex-col w-full text-left px-2 py-4">
         {categories.map((item, index) => (
@@ -131,18 +131,19 @@ export default function Rightbar({
             </Link>
 
             <div className="flex flex-col justify-center">
-              <Link
-                href={`/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
-                  item?.title
-                )}`}
-              >
-                <p className="text-xl font-semibold group-hover:underline">
+              <div>
+                <Link
+                  href={`/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+                    item?.title
+                  )}`}
+                  className="text-xl font-semibold underline-white"
+                >
                   {item.title}
-                </p>
-              </Link>
-              <div className="flex items-center gap-5 mt-2">
+                </Link>
+              </div>
+              <div className="flex items-center gap-3 mt-2">
                 <p className="text-gray-500">{item.author}</p> {" - "}
-                <p className="text-gray-500">{item.date}</p>
+                <p className="text-gray-500">{item.published_at}</p>
               </div>
             </div>
           </div>

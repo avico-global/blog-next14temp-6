@@ -5,7 +5,6 @@ import Container from "@/components/common/Container";
 import Navbar from "@/components/containers/Navbar";
 import { useRouter } from "next/router";
 import MarkdownIt from "markdown-it";
-import LatestBlogs from "@/components/containers/LatestBlogs";
 import Footer from "@/components/containers/Footer";
 import Head from "next/head";
 import { callBackendApi, getDomain, getImagePath } from "@/lib/myFun";
@@ -16,12 +15,6 @@ import useBreadcrumbs from "@/lib/useBreadcrumbs";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import SocialShare from "@/components/common/SocialShare";
-
-// Font
-import { Raleway } from "next/font/google";
-const myFont = Raleway({
-  subsets: ["cyrillic", "cyrillic-ext", "latin", "latin-ext"],
-});
 
 // Helper function to replace special characters in URLs
 const sanitizeUrl = (text) => {
@@ -71,7 +64,7 @@ export default function Blog({
   }, [category, router, blog]);
 
   return (
-    <div className={myFont.className}>
+    <div>
       <Head>
         <meta charSet="UTF-8" />
         <title>{myblog?.value?.meta_title}</title>
@@ -103,8 +96,14 @@ export default function Blog({
         nav_type={nav_type}
       />
 
+      <FullContainer>
+        <Container>
+          <Breadcrumbs breadcrumbs={breadcrumbs} className="py-5" />
+        </Container>
+      </FullContainer>
+
       <FullContainer
-        className="min-h-[62vh] overflow-hidden p-10 text-center"
+        className="overflow-hidden py-24 text-center bg-black/30"
         style={{
           backgroundColor: `rgba(0, 0, 0, ${myblog?.value?.opacity / 100})`,
           color: myblog?.value?.textColor || "white",
@@ -123,11 +122,11 @@ export default function Blog({
           loading="eager"
           className="-z-10 w-full h-full object-cover absolute top-0"
         />
-        <Container className="gap-8">
-          <Badge>{myblog?.value?.article_category?.name}</Badge>
+        <Container className="gap-8 lg:items-start lg:justify-end text-left lg:min-h-[50vh]">
+          <Badge>{myblog?.value?.article_category}</Badge>
           <h1
             style={{ fontSize: myblog?.value?.titleFontSize || 48 }}
-            className="font-bold capitalize max-w-screen-md"
+            className="font-bold capitalize max-w-screen-md leading-tight"
           >
             {myblog?.value.title}
           </h1>
@@ -135,6 +134,7 @@ export default function Blog({
             style={{
               fontSize: myblog?.value?.taglineFontSize || 18,
             }}
+            className="max-w-screen-md text-white/70"
           >
             {myblog?.value.tagline}
           </p>
@@ -144,47 +144,40 @@ export default function Blog({
         </Container>
       </FullContainer>
 
-      <FullContainer>
+      <FullContainer className="mt-8 mb-16">
         <Container>
-          <Breadcrumbs breadcrumbs={breadcrumbs} className="pt-7 pb-5" />
-        </Container>
-      </FullContainer>
-
-      <FullContainer>
-        <Container>
-          <div className="grid grid-cols-1 md:grid-cols-home1 gap-14 w-full py-8 ">
-            <div className="">
-              <article className="prose lg:prose-xl max-w-full">
-                <div dangerouslySetInnerHTML={{ __html: content }} />
-              </article>
-              <div className="mt-12">
-                <h3 className="text-lg font-semibold">Share this article:</h3>
-                <SocialShare
-                  url={`http://${domain}${
-                    myblog?.article_category?.name
-                  }/${myblog?.title?.replaceAll(" ", "-")?.toLowerCase()}`}
-                  title={myblog?.value.title}
-                />
-              </div>
+          <div className="grid grid-cols-blogPage gap-14 max-w-screen-xl w-full">
+            <div className="mt-5">
+              <SocialShare
+                url={`http://${domain}${
+                  myblog?.article_category?.name
+                }/${myblog?.title?.replaceAll(" ", "-")?.toLowerCase()}`}
+                title={myblog?.value.title}
+              />
             </div>
-            <Rightbar
-              imagePath={imagePath}
-              tag_list={tag_list}
-              about_me={about_me}
-              categories={categories}
-              category={category}
-              contact_details={contact_details}
-              blog_list={blog_list}
-              widgets={
-                layout?.find((page) => page.page === "blog page")?.widgets
-              }
-            />
+            <article className="prose lg:prose-xl max-w-full">
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+            </article>
+            <div className="mt-5">
+              <Rightbar
+                imagePath={imagePath}
+                tag_list={tag_list}
+                about_me={about_me}
+                categories={categories}
+                category={category}
+                contact_details={contact_details}
+                blog_list={blog_list}
+                widgets={
+                  layout?.find((page) => page.page === "blog page")?.widgets
+                }
+              />
+            </div>
           </div>
         </Container>
       </FullContainer>
 
       <Footer
-      logo={logo}
+        logo={logo}
         imagePath={imagePath}
         blog_list={blog_list}
         categories={categories}

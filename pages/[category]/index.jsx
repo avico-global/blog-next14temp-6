@@ -19,6 +19,7 @@ import Breadcrumbs from "@/components/common/Breadcrumbs";
 import Rightbar from "@/components/containers/Rightbar";
 import Navbar from "@/components/containers/Navbar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export default function Categories({
   logo,
@@ -75,16 +76,14 @@ export default function Categories({
             Exploring: {category?.replace("-", " ")}
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-home gap-12 w-full">
-            <div className="w-full flex flex-col gap-10">
+            <div className="w-full flex flex-col gap-14">
               {filteredBlogList.map((item, index) => (
-                <div key={index} className="group flex flex-col gap-5">
+                <div key={index} className="group flex flex-col gap-4">
                   <Link
                     title={item?.title || "Article Link"}
-                    href={`/${category
-                      ?.replaceAll(" ", "-")
-                      ?.toLowerCase()}/${item?.title
-                      ?.replaceAll(" ", "-")
-                      ?.toLowerCase()}`}
+                    href={`/${sanitizeUrl(category)}/${sanitizeUrl(
+                      item?.title
+                    )}`}
                   >
                     <div className="overflow-hidden relative min-h-40 rounded lg:min-h-[500px] w-full bg-black flex-1">
                       <Image
@@ -101,28 +100,27 @@ export default function Categories({
                         }
                         fill={true}
                         loading="lazy"
-                        className="w-full h-full object-cover absolute top-0 group-hover:scale-125 duration-700 transition-all"
+                        className="w-full h-full object-cover absolute top-0 group-hover:scale-125 duration-1000 transition-all"
                       />
                     </div>
                   </Link>
 
-                  <Badge>{item.article_category}</Badge>
+                  <Badge className="mt-2">{item.article_category}</Badge>
 
-                  <Link
-                    title={item?.title || "Article Link"}
-                    href={`/${category
-                      ?.replaceAll(" ", "-")
-                      ?.toLowerCase()}/${item?.title
-                      ?.replaceAll(" ", "-")
-                      ?.toLowerCase()}`}
-                  >
-                    <h2 className="font-bold text-3xl text-inherit leading-tight group-hover-underline-animation">
+                  <div>
+                    <Link
+                      title={item?.title || "Article Link"}
+                      href={`/${sanitizeUrl(category)}/${sanitizeUrl(
+                        item?.title
+                      )}`}
+                      className="font-bold text-3xl text-inherit leading-tight underline-white"
+                    >
                       {item.title}
-                    </h2>
-                  </Link>
+                    </Link>
+                  </div>
                   <p className="text-gray-500">{item?.articleContent}</p>
 
-                  <div className="flex items-center gap-2 mt-1">
+                  <div className="flex items-center gap-2">
                     <p className="text-sm font-semibold">
                       <span className="text-gray-400 text-sm">By</span>:{" "}
                       {item.author}
@@ -132,6 +130,15 @@ export default function Categories({
                       {dayjs(item?.published_at)?.format("MMM D, YYYY")}
                     </p>
                   </div>
+
+                  <Link
+                    title={item?.title || "Article Link"}
+                    href={`/${sanitizeUrl(category)}/${sanitizeUrl(
+                      item?.title
+                    )}`}
+                  >
+                    <Button className="hover:bg-green-500">Read More</Button>
+                  </Link>
                 </div>
               ))}
             </div>

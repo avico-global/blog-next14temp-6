@@ -81,18 +81,13 @@
   margin-bottom: 0;
 }
 
-.group-hover-underline-animation {
-  @apply inline-block relative;
+.underline-white {
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) bottom / 0 .1em no-repeat;
+  transition: 1s background-size;
 }
 
-.group-hover-underline-animation::after {
-  content: '';
-  @apply absolute w-full h-0.5 bottom-0 left-0 bg-primary;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s ease-out;
-}
-
-.group:hover .group-hover-underline-animation::after {
-  transform: scaleX(1);
+.group:hover .underline-white {
+  background-size: 100% .1em;
+  background-position: left bottom;
 }

@@ -17,7 +17,7 @@ import Rightbar from "@/components/containers/Rightbar";
 
 import MostPopular from "@/components/containers/MostPopular";
 import JsonLd from "@/components/json/JsonLd";
-import MustRead from "@/components/containers/MustRead";
+import MustRead from "@/components/containers/TrendingNews";
 import Blog from "./[category]/[blog]";
 
 export default function OurBlogs({
