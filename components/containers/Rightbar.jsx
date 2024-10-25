@@ -108,7 +108,10 @@ export default function Rightbar({
       </h2>
       <div className="flex flex-col mt-6 gap-6">
         {lastThreeBlogs.map((item, index) => (
-          <div key={index} className="grid grid-cols-bblog gap-5 group">
+          <div
+            key={index}
+            className="grid md:grid-cols-mdbblog lg:grid-cols-bblog gap-2 lg:gap-5 group"
+          >
             <Link
               href={`/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
                 item?.title
@@ -136,7 +139,7 @@ export default function Rightbar({
                   href={`/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
                     item?.title
                   )}`}
-                  className="text-xl font-semibold underline-white"
+                  className="text-lg lg:text-xl font-semibold underline-white leading-tight"
                 >
                   {item.title}
                 </Link>

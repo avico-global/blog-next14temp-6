@@ -52,6 +52,10 @@ export default function Home({
   const router = useRouter();
   const { category } = router.query;
 
+  const handleNavigation = (page) => {
+    router.push(page);
+  };
+
   useEffect(() => {
     const currentPath = router.asPath;
 
@@ -144,10 +148,19 @@ export default function Home({
                     <div
                       key={index}
                       className={`relative overflow-hidden group h-[60vh] w-full`}
+                      onClick={() =>
+                        handleNavigation(
+                          `/${encodeURI(
+                            sanitizeUrl(item.article_category)
+                          )}/${encodeURI(sanitizeUrl(item.title))}`
+                        )
+                      }
                     >
                       <Link
                         key={index}
-                        href={`/${sanitizeUrl(item.article_category) || "#"}`}
+                        href={`/${encodeURI(
+                          sanitizeUrl(item.article_category)
+                        )}/${encodeURI(sanitizeUrl(item.title))}`}
                         title={item.imageTitle}
                         className="relative overflow-hidden w-full h-full"
                       >
@@ -172,9 +185,9 @@ export default function Home({
 
                         <div className="max-w-2xl">
                           <Link
-                            href={`/${
-                              sanitizeUrl(item.article_category) || "#"
-                            }`}
+                            href={`/${encodeURI(
+                              sanitizeUrl(item.article_category)
+                            )}/${encodeURI(sanitizeUrl(item.title))}`}
                             className="font-medium text-4xl underline-white leading-tight"
                           >
                             {item.title}

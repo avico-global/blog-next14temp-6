@@ -11,7 +11,7 @@ import {
 
 const SocialShare = ({ url, title }) => {
   return (
-    <div className="flex flex-col items-center gap-3 sticky top-36">
+    <div className="flex flex-col items-center gap-3 sticky top-24 lg:top-36">
       <FacebookShareButton url={url} quote={title}>
         <FacebookIcon size={37} round />
       </FacebookShareButton>

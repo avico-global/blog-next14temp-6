@@ -7,7 +7,12 @@ import { useRouter } from "next/router";
 import MarkdownIt from "markdown-it";
 import Footer from "@/components/containers/Footer";
 import Head from "next/head";
-import { callBackendApi, getDomain, getImagePath } from "@/lib/myFun";
+import {
+  callBackendApi,
+  getDomain,
+  getImagePath,
+  sanitizeUrl,
+} from "@/lib/myFun";
 import JsonLd from "@/components/json/JsonLd";
 import GoogleTagManager from "@/lib/GoogleTagManager";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
@@ -15,11 +20,7 @@ import useBreadcrumbs from "@/lib/useBreadcrumbs";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import SocialShare from "@/components/common/SocialShare";
-
-// Helper function to replace special characters in URLs
-const sanitizeUrl = (text) => {
-  return text?.replaceAll(/%20/g, "-").replaceAll(" ", "-");
-};
+import Link from "next/link";
 
 // Main Blog component
 export default function Blog({
@@ -122,18 +123,22 @@ export default function Blog({
           loading="eager"
           className="-z-10 w-full h-full object-cover absolute top-0"
         />
-        <Container className="gap-8 lg:items-start lg:justify-end text-left lg:min-h-[50vh]">
-          <Badge>{myblog?.value?.article_category}</Badge>
+        <Container className="gap-8 lg:items-start lg:justify-end lg:text-left lg:min-h-[50vh]">
+          <Link href={`/${sanitizeUrl(myblog?.value?.article_category)}`}>
+            <Badge className="hover:bg-green-500">
+              {myblog?.value?.article_category}
+            </Badge>
+          </Link>
           <h1
-            style={{ fontSize: myblog?.value?.titleFontSize || 48 }}
-            className="font-bold capitalize max-w-screen-md leading-tight"
+            // style={{ fontSize: myblog?.value?.titleFontSize || 48 }}
+            className="text-3xl lg:text-4xl font-bold capitalize max-w-screen-md leading-tight"
           >
             {myblog?.value.title}
           </h1>
           <p
-            style={{
-              fontSize: myblog?.value?.taglineFontSize || 18,
-            }}
+            // style={{
+            //   fontSize: myblog?.value?.taglineFontSize || 18,
+            // }}
             className="max-w-screen-md text-white/70"
           >
             {myblog?.value.tagline}
@@ -144,20 +149,22 @@ export default function Blog({
         </Container>
       </FullContainer>
 
-      <FullContainer className="mt-8 mb-16">
+      <FullContainer className="mt-2 lg:mt-8 mb-16">
         <Container>
-          <div className="grid grid-cols-blogPage gap-14 max-w-screen-xl w-full">
-            <div className="mt-5">
-              <SocialShare
-                url={`http://${domain}${
-                  myblog?.article_category?.name
-                }/${myblog?.title?.replaceAll(" ", "-")?.toLowerCase()}`}
-                title={myblog?.value.title}
-              />
+          <div className="grid grid-cols-1 md:grid-cols-mdblogPage lg:grid-cols-blogPage gap-14 max-w-screen-xl w-full">
+            <div className="flex gap-4 md:gap-7 lg:gap-12">
+              <div className="mt-5">
+                <SocialShare
+                  url={`http://${domain}${
+                    myblog?.article_category?.name
+                  }/${myblog?.title?.replaceAll(" ", "-")?.toLowerCase()}`}
+                  title={myblog?.value.title}
+                />
+              </div>
+              <article className="prose lg:prose-xl max-w-full flex-1">
+                <div dangerouslySetInnerHTML={{ __html: content }} />
+              </article>
             </div>
-            <article className="prose lg:prose-xl max-w-full">
-              <div dangerouslySetInnerHTML={{ __html: content }} />
-            </article>
             <div className="mt-5">
               <Rightbar
                 imagePath={imagePath}
@@ -227,17 +234,16 @@ export async function getServerSideProps({ req, query }) {
 
   const categories = await callBackendApi({ domain, type: "categories" });
   const blog_list = await callBackendApi({ domain, type: "blog_list" });
+  const isValidBlog = blog_list?.data[0]?.value?.find((item) => {
+    console.log("Current item:", item.title);
+    console.log("Sanitized item title:", sanitizeUrl(item.title));
+    console.log("Sanitized blog:", sanitizeUrl(blog));
 
-  const isValidBlog = blog_list?.data[0]?.value?.find(
-    (item) =>
-      sanitizeUrl(item.title)?.toLowerCase()?.replaceAll(" ", "-") ===
-      sanitizeUrl(blog)?.toLowerCase()?.replaceAll(" ", "-")
-  );
+    return sanitizeUrl(item.title) === sanitizeUrl(blog);
+  });
 
   const categoryExists = categories?.data[0]?.value?.some(
-    (cat) =>
-      cat?.title?.toLowerCase()?.replaceAll(" ", "-") ===
-      sanitizeUrl(category)?.toLowerCase()?.replaceAll(" ", "-")
+    (cat) => sanitizeUrl(cat?.title) === sanitizeUrl(category)
   );
 
   if (!categoryExists || !isValidBlog) {

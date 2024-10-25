@@ -286,7 +286,7 @@ const SidebarLinks = ({
     </div>
 
     <Link href="/contact" title="Contact">
-      Contacts
+      Contact Us
     </Link>
     <Link href="/about" className="uppercase text-sm mb-2">
       About
