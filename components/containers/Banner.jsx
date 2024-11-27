@@ -7,7 +7,13 @@ import Link from "next/link";
 
 export default function Banner({ image, data, blog_list, imagePath }) {
   return (
-    <FullContainer className="relative overflow-hidden">
+    <FullContainer
+      className="relative overflow-hidden"
+      style={{
+        backgroundColor: `rgba(0, 0, 0, ${data?.opacity / 100})`,
+        color: data.textColor || "white",
+      }}
+    >
       <Image
         src={image}
         title={data.imageTitle || data.title || "Banner"}

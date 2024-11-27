@@ -69,37 +69,38 @@ export default function Rightbar({
     </div>
   );
 
-  const renderTags = () => (
-    <div className="border pt-5 px-4 flex flex-col items-center text-center">
-      <h2 className="bg-secondary px-5 font-bold text-lg -mt-9">
-        Article Tags
-      </h2>
-      <div className="flex items-center flex-wrap w-full text-left px-2 py-4 gap-2">
-        {tag_list?.slice(0, 10)?.map((item, index) => (
-          <Link
-            key={index}
-            title={item.tag}
-            href={`/tags/${encodeURI(sanitizeUrl(item.tag))}`}
-            className="bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded py-1 text-sm px-2"
-          >
-            {item.tag}
-            {item.article_ids?.length > 1 && (
-              <span className="bg-black text-white px-1 ml-1 text-sm rounded-full">
-                {item.article_ids.length}
-              </span>
-            )}
-          </Link>
-        ))}
+  const renderTags = () =>
+    tag_list?.length > 0 && (
+      <div className="border pt-5 px-4 flex flex-col items-center text-center">
+        <h2 className="bg-secondary px-5 font-bold text-lg -mt-9">
+          Article Tags
+        </h2>
+        <div className="flex items-center flex-wrap w-full text-left px-2 py-4 gap-2">
+          {tag_list?.slice(0, 10)?.map((item, index) => (
+            <Link
+              key={index}
+              title={item.tag}
+              href={`/tags/${encodeURI(sanitizeUrl(item.tag))}`}
+              className="bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded py-1 text-sm px-2"
+            >
+              {item.tag}
+              {item.article_ids?.length > 1 && (
+                <span className="bg-black text-white px-1 ml-1 text-sm rounded-full">
+                  {item.article_ids.length}
+                </span>
+              )}
+            </Link>
+          ))}
+        </div>
+        <Link
+          title="Click to see all tags"
+          href="/tags"
+          className="my-3 underline font-bold"
+        >
+          Click To See All Tags
+        </Link>
       </div>
-      <Link
-        title="Click to see all tags"
-        href="/tags"
-        className="my-3 underline font-bold"
-      >
-        Click To See All Tags
-      </Link>
-    </div>
-  );
+    );
 
   const renderLatestPosts = () => (
     <div className="pt-5 flex flex-col items-center">
@@ -157,40 +158,10 @@ export default function Rightbar({
 
   return (
     <div className="h-fit sticky top-36 flex flex-col gap-14">
-      {widgets.map((item, index) => {
-        if (!item.enable) return null;
-
-        switch (item.name?.toLowerCase()) {
-          case "about":
-            return (
-              <React.Fragment key={item.name}>{renderAbout()}</React.Fragment>
-            );
-          case "categories":
-            return (
-              categories.length > 0 && (
-                <React.Fragment key={item.name}>
-                  {renderCategories()}
-                </React.Fragment>
-              )
-            );
-          case "article tags":
-            return (
-              tag_list?.length > 0 && (
-                <React.Fragment key={item.name}>{renderTags()}</React.Fragment>
-              )
-            );
-          case "latest posts":
-            return (
-              lastThreeBlogs.length > 0 && (
-                <React.Fragment key={item.name}>
-                  {renderLatestPosts()}
-                </React.Fragment>
-              )
-            );
-          default:
-            return null;
-        }
-      })}
+      {renderAbout()}
+      {renderTags()}
+      {renderCategories()}
+      {renderLatestPosts()}
     </div>
   );
 }

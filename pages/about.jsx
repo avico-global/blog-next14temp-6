@@ -15,7 +15,7 @@ import MarkdownIt from "markdown-it";
 import { callBackendApi, getDomain, getImagePath } from "@/lib/myFun";
 import GoogleTagManager from "@/lib/GoogleTagManager";
 import JsonLd from "@/components/json/JsonLd";
-
+import useBreadcrumbs from "@/lib/useBreadcrumbs";
 
 const myFont = Roboto({
   subsets: ["cyrillic"],
@@ -24,189 +24,178 @@ const myFont = Roboto({
 const font2 = Cormorant({ subsets: ["cyrillic"] });
 
 export default function About({
+  page,
   logo,
   meta,
   domain,
-  layout,
-  nav_type,
+  favicon,
   about_me,
+  nav_type,
   copyright,
-  blog_list,
   imagePath,
+  blog_list,
   categories,
   contact_details,
-  favicon,
-
 }) {
   const markdownIt = new MarkdownIt();
   const content = markdownIt?.render(about_me.value || "");
-  const page = layout?.find((page) => page.page === "about");
+
+  const breadcrumbs = useBreadcrumbs();
 
   return (
-    <div className={myFont.className}>
-       <Head>
-        <meta charSet="UTF-8" />
-        <title>{meta?.title}</title>
-        <meta name="description" content={meta?.description} />
-        <link rel="author" href={`https://www.${domain}`} />
-        <link rel="publisher" href={`https://www.${domain}`} />
-        <link rel="canonical" href={`https://www.${domain}/about`} />
-        {/* <meta name="robots" content="noindex" /> */}
-        <meta name="theme-color" content="#008DE5" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <GoogleTagManager />
-        <meta
-          name="google-site-verification"
-          content="zbriSQArMtpCR3s5simGqO5aZTDqEZZi9qwinSrsRPk"
+    page?.enable && (
+      <div className={myFont.className}>
+        <Head>
+          <meta charSet="UTF-8" />
+          <title>{meta?.title}</title>
+          <meta name="description" content={meta?.description} />
+          <link rel="author" href={`https://www.${domain}`} />
+          <link rel="publisher" href={`https://www.${domain}`} />
+          <link rel="canonical" href={`https://www.${domain}/about`} />
+          {/* <meta name="robots" content="noindex" /> */}
+          <meta name="theme-color" content="#008DE5" />
+          <link rel="manifest" href="/manifest.json" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <GoogleTagManager />
+          <meta
+            name="google-site-verification"
+            content="zbriSQArMtpCR3s5simGqO5aZTDqEZZi9qwinSrsRPk"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href={`${process.env.NEXT_PUBLIC_SITE_MANAGER}/images/${imagePath}/${favicon}`}
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href={`${process.env.NEXT_PUBLIC_SITE_MANAGER}/images/${imagePath}/${favicon}`}
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href={`${process.env.NEXT_PUBLIC_SITE_MANAGER}/images/${imagePath}/${favicon}`}
+          />
+        </Head>
+        <Navbar
+          logo={logo}
+          nav_type={nav_type}
+          imagePath={imagePath}
+          blog_list={blog_list}
+          categories={categories}
         />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href={`${process.env.NEXT_PUBLIC_SITE_MANAGER}/images/${imagePath}/${favicon}`}
+        <AboutBanner image={`${imagePath}/${about_me.file_name}`} />
+        <FullContainer>
+          <Container className="py-16">
+            <div className="grid grid-cols-about gap-16 w-full">
+              <div className={font2.className}>
+                <div
+                  className="prose-xl"
+                  dangerouslySetInnerHTML={{ __html: content }}
+                />
+              </div>
+              <Rightbar
+                widgets={page?.widgets}
+                about_me={about_me}
+                imagePath={imagePath}
+                blog_list={blog_list}
+                categories={categories}
+                contact_details={contact_details}
+              />
+            </div>
+          </Container>
+        </FullContainer>
+        <Footer
+          blog_list={blog_list}
+          categories={categories}
+          logo={logo}
+          imagePath={imagePath}
+          contact_details={contact_details}
+          copyright={copyright}
+          about_me={about_me}
         />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href={`${process.env.NEXT_PUBLIC_SITE_MANAGER}/images/${imagePath}/${favicon}`}
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href={`${process.env.NEXT_PUBLIC_SITE_MANAGER}/images/${imagePath}/${favicon}`}
-        />
-      </Head>
 
-      {page?.enable
-        ? page?.sections?.map((item, index) => {
-            if (!item.enable) return null;
-
-            switch (item.section?.toLowerCase()) {
-              case "navbar":
-                return (
-                  <Navbar
-                    key={index}
-                    logo={logo}
-                    nav_type={nav_type}
-                    imagePath={imagePath}
-                    blog_list={blog_list}
-                    categories={categories}
-                  />
-                );
-              case "banner":
-                return (
-                  <AboutBanner image={`${imagePath}/${about_me.file_name}`} />
-                );
-              case "text":
-                return (
-                  <FullContainer>
-                    <Container className="py-16">
-                      <div className="grid grid-cols-about gap-16 w-full">
-                        <div className={font2.className}>
-                          <div
-                            className="prose-xl"
-                            dangerouslySetInnerHTML={{ __html: content }}
-                          />
-                        </div>
-                        <Rightbar
-              widgets={page?.widgets}
-
-              about_me={about_me}
-              imagePath={imagePath}
-              blog_list={blog_list}
-              categories={categories}
-              contact_details={contact_details}
-            />
-                      </div>
-                    </Container>
-                  </FullContainer>
-                );
-              case "footer":
-                return (
-                  <Footer
-                    blog_list={blog_list}
-                    categories={categories}
-                    logo={logo}
-                    imagePath={imagePath}
-                    contact_details={contact_details}
-                    copyright={copyright}
-                    about_me={about_me}
-                  />
-                );
-            }
-          })
-        : "Page Disabled,under maintenance"}
-
-{/* <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@graph": [
-            {
-              "@type": "WebSite",
-              "@id": `http://${domain}/#website`,
-              url: `http://${domain}/`,
-              name: domain,
-              description: meta?.description,
-              inLanguage: "en-US",
-              publisher: {
-                "@type": "Organization",
-                "@id": `http://${domain}`,
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebPage",
+                "@id": `https://${domain}/about`,
+                url: `https://${domain}/about`,
+                name: meta?.title,
+                description: meta?.description,
+                inLanguage: "en-US",
+                publisher: {
+                  "@type": "Organization",
+                  "@id": `https://${domain}`,
+                },
               },
-            },
-            {
-              "@type": "BreadcrumbList",
-              itemListElement: breadcrumbs.map((breadcrumb, index) => ({
-                "@type": "ListItem",
-                position: index + 1,
-                name: breadcrumb.label,
-                item: `http://${domain}${breadcrumb.url}`,
-              })),
-            },
-          ],
-        }}
-      /> */}
-    </div>
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: breadcrumbs.map((breadcrumb, index) => ({
+                  "@type": "ListItem",
+                  position: index + 1,
+                  name: breadcrumb.label,
+                  item: `https://${domain}${breadcrumb.url}`,
+                })),
+              },
+            ],
+          }}
+        />
+      </div>
+    )
   );
 }
 
-export async function getServerSideProps({ req, query }) {
+export async function getServerSideProps({ req }) {
   const domain = getDomain(req?.headers?.host);
   const logo = await callBackendApi({ domain, type: "logo" });
 
-  let project_id = logo?.data[0]?.project_id || null;
-  let imagePath = await getImagePath(project_id, domain);
-  const about_me = await callBackendApi({ domain, query, type: "about_me" });
-  const layout = await callBackendApi({ domain, type: "layout" });
-
-  const categories = await callBackendApi({
+  let layoutPages = await callBackendApi({
     domain,
-    query,
-    type: "categories",
+    type: "layout",
   });
 
-  const blog_list = await callBackendApi({ domain, query, type: "blog_list" });
-  const meta = await callBackendApi({ domain, query, type: "meta_home" });
+  const categories = await callBackendApi({ domain, type: "categories" });
+  const copyright = await callBackendApi({ domain, type: "copyright" });
+  const blog_list = await callBackendApi({ domain, type: "blog_list" });
+  const about_me = await callBackendApi({ domain, type: "about_me" });
   const nav_type = await callBackendApi({ domain, type: "nav_type" });
+  const meta = await callBackendApi({ domain, type: "meta_home" });
+
   const contact_details = await callBackendApi({
     domain,
-    query,
     type: "contact_details",
   });
-  const copyright = await callBackendApi({
-    domain,
-    query,
-    type: "copyright",
-  });
+
+  let project_id = logo?.data[0]?.project_id || null;
+  let imagePath = await getImagePath(project_id, domain);
+
+  let page = null;
+  if (Array.isArray(layoutPages?.data) && layoutPages.data.length > 0) {
+    const valueData = layoutPages.data[0].value;
+    page = valueData?.find((page) => page.page === "about");
+  }
+
+  if (!page?.enable) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
+      page,
       logo: logo.data[0] || null,
       about_me: about_me.data[0] || null,
       imagePath,
-      layout: layout?.data[0]?.value || null,
       blog_list: blog_list.data[0].value,
       categories: categories?.data[0]?.value || null,
       domain,
