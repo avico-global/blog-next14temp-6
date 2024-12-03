@@ -207,78 +207,71 @@ export default function Home({
                 )}
 
                 {/* Must Read Section */}
-                {blog_list?.map(
-                  (item, index) =>
-                    item.isMustRead && (
-                      <div
-                        key={index}
-                        className="grid grid-cols-2 bg-white shadow-md group"
-                      >
+                {blog_list?.reverse().map((item, index) => (
+                  <div
+                    key={index}
+                    className="grid grid-cols-2 bg-white shadow-md group"
+                  >
+                    <Link
+                      title={item.article_category || "category"}
+                      href={`/${encodeURI(
+                        sanitizeUrl(item.article_category)
+                      )}/${encodeURI(sanitizeUrl(item.title))}`}
+                      imageHeight="h-72 md:h-[420px]"
+                      imageTitle={
+                        item.imageTitle || item.title || "Blog Image Title"
+                      }
+                      className="relative overflow-hidden"
+                    >
+                      <img
+                        src={
+                          item.image
+                            ? `${imagePath}/${item.image}`
+                            : "/no-image.png"
+                        }
+                        alt={
+                          item.altImage || item.tagline || "Article Thumbnail"
+                        }
+                        className="w-full h-full object-cover group-hover:scale-125 transition-all duration-1000"
+                        title={
+                          item.imageTitle || item.title || "Blog Image Title"
+                        }
+                      />
+                    </Link>
+
+                    <div className="flex flex-col justify-center p-8">
+                      <p className="text-lg font-medium capitalize text-gray-400">
+                        {item.article_category}
+                      </p>
+
+                      <div className="mt-4">
                         <Link
-                          title={item.article_category || "category"}
                           href={`/${encodeURI(
                             sanitizeUrl(item.article_category)
                           )}/${encodeURI(sanitizeUrl(item.title))}`}
-                          imageHeight="h-72 md:h-[420px]"
-                          imageTitle={
-                            item.imageTitle || item.title || "Blog Image Title"
-                          }
-                          className="relative overflow-hidden"
+                          title={item.title}
+                          className="text-2xl font-semibold underline-white"
                         >
-                          <img
-                            src={
-                              item.image
-                                ? `${imagePath}/${item.image}`
-                                : "/no-image.png"
-                            }
-                            alt={
-                              item.altImage ||
-                              item.tagline ||
-                              "Article Thumbnail"
-                            }
-                            className="w-full h-full object-cover group-hover:scale-125 transition-all duration-1000"
-                            title={
-                              item.imageTitle ||
-                              item.title ||
-                              "Blog Image Title"
-                            }
-                          />
+                          {item.title}
                         </Link>
-
-                        <div className="flex flex-col justify-center p-8">
-                          <p className="text-lg font-medium capitalize text-gray-400">
-                            {item.article_category}
-                          </p>
-
-                          <div className="mt-4">
-                            <Link
-                              href={`/${encodeURI(
-                                sanitizeUrl(item.article_category)
-                              )}/${encodeURI(sanitizeUrl(item.title))}`}
-                              title={item.title}
-                              className="text-2xl font-semibold underline-white"
-                            >
-                              {item.title}
-                            </Link>
-                          </div>
-
-                          <p className="mt-2 text-gray-500">
-                            {item.tagline?.slice(0, 100)}...
-                          </p>
-
-                          <div className="flex items-center gap-2 mt-5">
-                            <p className="font-medium">
-                              <span className="text-gray-400">By</span>:{" "}
-                              {item.author}
-                            </p>
-                            <p className=" text-gray-400 font-medium">
-                              {dayjs(item?.published_at)?.format("MMM D, YYYY")}
-                            </p>
-                          </div>
-                        </div>
                       </div>
-                    )
-                )}
+
+                      <p className="mt-2 text-gray-500">
+                        {item.tagline?.slice(0, 100)}...
+                      </p>
+
+                      <div className="flex items-center gap-2 mt-5">
+                        <p className="font-medium">
+                          <span className="text-gray-400">By</span>:{" "}
+                          {item.author}
+                        </p>
+                        <p className=" text-gray-400 font-medium">
+                          {dayjs(item?.published_at)?.format("MMM D, YYYY")}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               {/* Sidebar */}
