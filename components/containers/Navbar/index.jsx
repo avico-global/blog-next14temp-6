@@ -119,10 +119,14 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                   </div>
                 )}
               </div>
-              <Link href="/contact" className="hover:text-gray-300">
+              <Link
+                title="Contact"
+                href="/contact"
+                className="hover:text-gray-300"
+              >
                 Contact Us
               </Link>
-              <Link href="/about" className="hover:text-gray-300">
+              <Link title="About" href="/about" className="hover:text-gray-300">
                 About Us
               </Link>
             </nav>
@@ -288,7 +292,7 @@ const SidebarLinks = ({
     <Link href="/contact" title="Contact">
       Contact Us
     </Link>
-    <Link href="/about" className="uppercase text-sm mb-2">
+    <Link href="/about" title="About" className="uppercase text-sm mb-2">
       About
     </Link>
   </div>
