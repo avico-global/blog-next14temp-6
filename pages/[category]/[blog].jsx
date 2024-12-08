@@ -134,8 +134,11 @@ export default function Blog({
               </Badge>
             </Link>
             <h1
-              style={{ fontSize: myblog?.value?.titleFontSize || 48 }}
-              className="text-3xl lg:text-4xl font-bold capitalize max-w-screen-md leading-tight"
+              style={{
+                fontSize: myblog?.value?.titleFontSize || 48,
+                lineHeight: "1.2",
+              }}
+              className="text-3xl lg:text-4xl font-bold capitalize max-w-screen-md"
             >
               {myblog?.value.title}
             </h1>
