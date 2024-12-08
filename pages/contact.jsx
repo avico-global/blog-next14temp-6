@@ -102,7 +102,7 @@ export default function Contact({
               <p className="text-xl mt-3 font-bold text-black">
                 {contact_details?.name}
               </p>
-              <h1>{contact_details?.email}</h1>
+              <p>{contact_details?.email}</p>
               <h2>{contact_details?.address}</h2>
               <p>{contact_details?.phone}</p>
             </div>
