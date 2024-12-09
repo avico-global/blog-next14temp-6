@@ -296,7 +296,7 @@ export default function Home({
             "@context": "https://www.schema.org",
             "@graph": [
               {
-                "@type": "WebPage",
+                "@type": "WebSite",
                 "@id": `https://${domain}/`,
                 url: `https://${domain}/`,
                 name: meta?.title,
@@ -310,22 +310,6 @@ export default function Home({
                   url: `${imagePath}/${banner?.file_name}`,
                   width: 1920,
                   height: 1080,
-                },
-                mainEntityOfPage: {
-                  "@type": "WebPage",
-                  "@id": `https://${domain}`,
-                },
-              },
-              {
-                "@type": "WebPage",
-                "@id": `https://${domain}`,
-                url: `https://${domain}`,
-                name: domain,
-                description: meta?.description,
-                inLanguage: "en-US",
-                publisher: {
-                  "@type": "Organization",
-                  "@id": `https://${domain}`,
                 },
               },
               {
@@ -354,28 +338,10 @@ export default function Home({
                   position: index + 1,
                   item: {
                     "@type": "Article",
-                    url: `https://${domain}/${blog?.article_category}/${blog.key}`,
-                    name: blog.title,
-                    author: {
-                      "@type": "Person",
-                      name: blog.author,
-                    },
-                    datePublished: blog.datePublished,
-                    dateModified: blog.dateModified,
-                    image: {
-                      "@type": "ImageObject",
-                      url: `${imagePath}/${blog.image}`,
-                      width: blog.imageWidth,
-                      height: blog.imageHeight,
-                    },
-                    headline: blog.title,
-                    description: blog.description,
-                    mainEntityOfPage: {
-                      "@type": "WebPage",
-                      "@id": `https://${domain}/${sanitizeUrl(
-                        blog?.article_category
-                      )}/${sanitizeUrl(blog.title)}`,
-                    },
+                    url: `https://${domain}/${sanitizeUrl(
+                      blog?.article_category
+                    )}/${sanitizeUrl(blog?.title)}`,
+                    name: blog?.title,
                   },
                 })),
               },
