@@ -1,99 +1,56 @@
 import React from "react";
-import Image from "next/image";
+import Link from "next/link";
+import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import FullContainer from "../common/FullContainer";
 import Container from "../common/Container";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { FacebookIcon, TwitterIcon } from "react-share";
-import {
-  Facebook,
-  Instagram,
-  Twitter,
-  Youtube,
-  YoutubeIcon,
-} from "lucide-react";
 import Logo from "./Navbar/Logo";
 
-export default function Footer({
-  logo,
-  imagePath,
-  categories,
-  category,
-  searchContainerRef,
-}) {
+export default function Footer({ logo, imagePath }) {
   const handleClick = (e) => {
     e.preventDefault();
     window.location.href = "/sitemap.xml";
   };
+
   return (
     <FullContainer className="bg-primary text-white py-16">
       <Container>
-        <div className=" flex justify-center items-center md:text-sm  ">
-          <div>
-            <div className="flex justify-center items-center space-y-10 ">
-              <Logo logo={logo} imagePath={imagePath} />
-            </div>
+        <div className="flex flex-col items-center">
+          {/* Logo Section */}
+          <Logo logo={logo} imagePath={imagePath} />
 
-            <div className=" flex  justify-center items-center py-16 gap-6   ">
-              <Facebook className=" border rounded-full p-1  " size={32} />
-              <Twitter className=" border rounded-full p-1  " size={32} />
-              <YoutubeIcon className=" border rounded-full p-1  " size={32} />
-              <Instagram className=" border rounded-full p-1  " size={32} />
-            </div>
-
-            <div className="lg:flex  text-center space-y-4 lg:space-y-0 items-center flex-wrap gap-5 lg:gap-10 font-bold mt-5 border-b border-gray-500 pb-6">
-              <Link
-                title="Home"
-                href="/"
-                className="uppercase text-sm hover:text-button w-fit transition-all"
+          {/* Social Icons */}
+          <div className="flex items-center gap-4 my-8">
+            {[Facebook, Twitter, Youtube, Instagram].map((Icon, index) => (
+              <a
+                key={index}
+                href="#"
+                className="hover:bg-white/10 border border-white/20 rounded-full p-2 transition-all duration-300 hover:scale-110"
               >
-                Home
-              </Link>
-              <Link
-                title="About"
-                href="/about"
-                className="uppercase text-sm mb-2 hover:text-button w-fit transition-all"
-              >
-                About
-              </Link>
-              <Link
-                title="Contact"
-                href="/contact"
-                className="uppercase text-sm mb-2 hover:text-button w-fit transition-all"
-              >
-                Contact
-              </Link>
-              <Link
-                title="Terms & Conditions"
-                href="/terms-and-conditions"
-                className="uppercase text-sm mb-2 hover:text-button w-fit transition-all"
-              >
-                Terms & Conditions
-              </Link>
-              <Link
-                title="Privacy Policy"
-                href="/privacy-policy"
-                className="uppercase text-sm mb-2 hover:text-button w-fit transition-all"
-              >
-                Privacy Policy
-              </Link>
-              <Link title="Sitemap" href="/sitemap.xml" legacyBehavior>
-                <a
-                  title="Sitemap"
-                  onClick={handleClick}
-                  className="uppercase text-sm mb-2 hover:text-button w-fit transition-all"
-                >
-                  Sitemap
-                </a>
-              </Link>
-            </div>
+                <Icon size={20} />
+              </a>
+            ))}
           </div>
-        </div>
-        <div>
-          <p className=" pt-8 ">
-            <span className=" text-blue-500 ">SiteBuilderz</span> @2024.All
-            Rights Reserved{" "}
-          </p>
+
+          {/* Navigation Links */}
+          <nav className="flex flex-wrap justify-center gap-6 w-full max-w-3xl">
+            {[
+              { title: "Home", href: "/" },
+              { title: "About", href: "/about" },
+              { title: "Contact", href: "/contact" },
+              { title: "Terms & Conditions", href: "/terms-and-conditions" },
+              { title: "Privacy Policy", href: "/privacy-policy" },
+              { title: "Sitemap", href: "/sitemap.xml", onClick: handleClick },
+            ].map((link) => (
+              <Link
+                key={link.title}
+                href={link.href}
+                onClick={link.onClick}
+                className="text-sm uppercase hover:text-button transition-colors duration-300"
+              >
+                {link.title}
+              </Link>
+            ))}
+          </nav>
         </div>
       </Container>
     </FullContainer>
