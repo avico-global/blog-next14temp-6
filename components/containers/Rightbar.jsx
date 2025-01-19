@@ -33,7 +33,7 @@ export default function Rightbar({
     >
       <div className="relative overflow-hidden ">
         <Image
-          src={`${imagePath}/${about_me.file_name}`}
+          src={`${imagePath}/${about_me?.file_name}`}
           title={`${content.slice(0, 100)}...`}
           alt={`${content.slice(0, 100)}...`}
           priority
@@ -54,15 +54,15 @@ export default function Rightbar({
           <Link
             key={index}
             title={item?.title}
-            href={`/${encodeURI(sanitizeUrl(item.title))}`}
+            href={`/${encodeURI(sanitizeUrl(item?.title))}`}
             className={cn(
               "text-gray-500 capitalize w-full flex items-center gap-2 hover:text-black transition-all p-2 border-b-2 border-gray-100 hover:border-black",
-              (category === item.title || isActive(`/${item.title}`)) &&
+              (category === item?.title || isActive(`/${item?.title}`)) &&
                 "border-black text-black"
             )}
           >
             <Circle className="w-2 h-2 text-blue-800" />
-            {item.title}
+            {item?.title}
           </Link>
         ))}
       </div>

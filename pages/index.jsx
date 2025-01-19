@@ -123,7 +123,7 @@ export default function Home({
         />
 
         <Banner
-          data={banner.value}
+          data={banner?.value}
           image={`${imagePath}/${banner?.file_name}`}
           blog_list={blog_list}
           imagePath={imagePath}
@@ -319,9 +319,9 @@ export default function Home({
                 url: `https://${domain}`,
                 logo: {
                   "@type": "ImageObject",
-                  url: `${imagePath}/${logo.file_name}`,
-                  width: logo.width,
-                  height: logo.height,
+                  url: `${imagePath}/${logo?.file_name}`,
+                  width: logo?.width || 100,
+                  height: logo?.height || 100,
                 },
                 sameAs: [
                   "https://www.facebook.com",

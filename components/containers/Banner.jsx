@@ -11,13 +11,13 @@ export default function Banner({ image, data, blog_list, imagePath }) {
       className="relative overflow-hidden"
       style={{
         backgroundColor: `rgba(0, 0, 0, ${data?.opacity / 100})`,
-        color: data.textColor || "white",
+        color: data?.textColor || "white",
       }}
     >
       <Image
         src={image}
-        title={data.imageTitle || data.title || "Banner"}
-        alt={data.altImage || data.tagline || "No Banner Found"}
+        title={data?.imageTitle || data?.title || "Banner"}
+        alt={data?.altImage || data?.tagline || "No Banner Found"}
         priority={true}
         fill={true}
         loading="eager"
