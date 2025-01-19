@@ -223,7 +223,7 @@ export default function Home({
                       }
                       className="relative overflow-hidden"
                     >
-                      <img
+                      <Image
                         src={
                           item.image
                             ? `${imagePath}/${item.image}`
@@ -236,6 +236,11 @@ export default function Home({
                         title={
                           item.imageTitle || item.title || "Blog Image Title"
                         }
+                        width={600}
+                        height={400}
+                        priority={false}
+                        loading="lazy"
+                        sizes="(max-width: 768px) 100vw, 50vw"
                       />
                     </Link>
 
