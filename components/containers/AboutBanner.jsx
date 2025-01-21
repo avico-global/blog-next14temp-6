@@ -5,7 +5,7 @@ import FullContainer from "../common/FullContainer";
 
 export default function AboutBanner({ image }) {
   return (
-    <FullContainer className=" min-h-[50vh] mx-auto max-w-[1500px] overflow-hidden  text-white text-center">
+    <FullContainer className=" min-h-[50vh] mx-auto max-w-[1500px] overflow-hidden  text-white text-center bg-black/20">
       <Image
         title="About"
         src={image}

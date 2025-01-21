@@ -38,7 +38,7 @@ export default function About({
   contact_details,
 }) {
   const markdownIt = new MarkdownIt();
-  const content = markdownIt?.render(about_me.value || "");
+  const content = markdownIt?.render(about_me?.value || "");
 
   const breadcrumbs = useBreadcrumbs();
 
@@ -90,11 +90,11 @@ export default function About({
           blog_list={blog_list}
           categories={categories}
         />
-        <AboutBanner image={`${imagePath}/${about_me.file_name}`} />
+        <AboutBanner image={`${imagePath}/${about_me?.file_name}`} />
         <FullContainer>
           <Container className="py-16">
             <div className="grid grid-cols-about gap-16 w-full">
-              <div className={font2.className}>
+              <div className={font2?.className}>
                 <div
                   className="prose-xl"
                   dangerouslySetInnerHTML={{ __html: content }}
