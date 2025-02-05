@@ -29,9 +29,9 @@ export default function Rightbar({
     <Link
       title="About"
       href="/about"
-      className="  flex flex-col items-center text-center border-b pb-20 "
+      className="flex flex-col items-center text-center border-b pb-20"
     >
-      <div className="relative overflow-hidden ">
+      <div className="relative overflow-hidden">
         <Image
           src={`${imagePath}/${about_me?.file_name}`}
           title={`${content.slice(0, 100)}...`}
@@ -42,6 +42,9 @@ export default function Rightbar({
           loading="eager"
           className="-z-10 object-cover"
         />
+        <h2 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-secondary text-primary px-8 py-4 font-extrabold text-4xl">
+          About Us
+        </h2>
       </div>
     </Link>
   );

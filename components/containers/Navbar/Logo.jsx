@@ -40,40 +40,38 @@ const Logo = ({ logo, imagePath }) => {
   const imageSrc = `${imagePath}/${logo.file_name}`;
 
   // Calculate dynamic height for different screen sizes
-  const dynamicLogoHeight =
-    windowWidth < 768
-      ? 30
-      : windowWidth < 1200
-      ? Math.floor(logoHeight / 2)
-      : logoHeight;
+  const dynamicLogoHeight = windowWidth < 768 
+    ? Math.min(40, logoHeight)
+    : windowWidth < 1200 
+    ? Math.min(Math.floor(logoHeight * 0.85), logoHeight)
+    : logoHeight;
 
-  // Default width for small and medium screens (you can adjust the ratio here)
-  const dynamicLogoWidth =
-    windowWidth >= 1200
-      ? logoWidth
-      : Math.floor((logoWidth / logoHeight) * dynamicLogoHeight);
+  // Calculate width while maintaining aspect ratio
+  const aspectRatio = logoWidth / logoHeight;
+  const dynamicLogoWidth = Math.floor(dynamicLogoHeight * aspectRatio * 2);
 
-  // Inline style to apply auto width using CSS
+  // Inline style with proper aspect ratio maintenance
   const logoStyle = {
     height: `${dynamicLogoHeight}px`,
-    width: windowWidth >= 1200 ? `${logoWidth}px` : "auto",
-    maxWidth: "100%", // Ensure it doesn't overflow its container
+    width: `${dynamicLogoWidth}px`,
+    objectFit: 'contain',
+    maxWidth: '120%',
   };
 
   return (
     <Link
-      title={`Logo - ${hostName}` || "logo" }
+      title={`Logo - ${hostName}` || "logo"}
       href="/"
       className="flex items-center justify-center mr-10"
     >
       {logoType === "image" ? (
         <Image
           height={dynamicLogoHeight}
-          width={dynamicLogoWidth} // Always pass a numeric width
+          width={dynamicLogoWidth}
           src={imageSrc}
           title={`Logo - ${hostName}` || "logo"}
           alt={`${logoText || "logo"} - ${hostName}`}
-          sizes="(max-width: 768px) 100px, (max-width: 1200px) 150px, 200px"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           style={logoStyle}
         />
       ) : logoType === "text" ? (
