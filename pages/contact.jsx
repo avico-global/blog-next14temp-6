@@ -13,6 +13,7 @@ import { callBackendApi, getDomain, getImagePath } from "@/lib/myFun";
 import { Roboto } from "next/font/google";
 import useBreadcrumbs from "@/lib/useBreadcrumbs";
 import JsonLd from "@/components/json/JsonLd";
+import { MailOpen, MapIcon, Phone } from "lucide-react";
 const myFont = Roboto({
   subsets: ["cyrillic"],
   weight: ["400", "700"],
@@ -90,24 +91,124 @@ export default function Contact({
           </Container>
         </FullContainer>
 
-        <FullContainer>
-          <Container className=" mt-16 lg:mt-40">
-            <Map location="united states" />
-          </Container>
-        </FullContainer>
 
-        <FullContainer>
-          <Container className="my-16">
-            <div className="flex flex-col items-center text-center text-gray-500 text-xs gap-3">
-              <p className="text-xl mt-3 font-bold text-black">
-                {contact_details?.name}
-              </p>
-              <p>{contact_details?.email}</p>
-              <h2>{contact_details?.address}</h2>
-              <p>{contact_details?.phone}</p>
+        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b ">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* Left Side - Image and Contact Info */}
+              <div className="hidden lg:block">
+                <div className="relative h-[600px] rounded-2xl overflow-hidden">
+                  <img
+                    src={   "/img/contact.jpg" ||`${imagePath}/${about_me.file_name}`} 
+                    alt="Contact Us"
+                    className="object-cover w-full h-full"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-8">
+                    <div className="space-y-4">
+                      <div className="flex items-center text-gray-100">
+                        <Phone className="w-5 h-5 mr-3" />
+                        <span>{contact_details?.phone || "+1 (555) 000-0000"}</span>
+                      </div>
+                      <div className="flex items-center text-gray-100">
+                        <MailOpen className="w-5 h-5 mr-3" />
+                        <span>{contact_details?.email || "contact@example.com"}</span>
+                      </div>
+                      <div className="flex items-center text-gray-100">
+                        <MapIcon className="w-5 h-5 mr-3" />
+                        <span>{contact_details?.address || "123 Business Street, City, Country"}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Side - Contact Form */}
+              <div>
+                <div className="text-center mb-12 lg:text-left">
+                  <h1 className="text-4xl font-bold text-gray-900 mb-4">Get in Touch</h1>
+                  <p className="text-lg text-gray-600">We&apos;d love to hear from you. Please fill out this form.</p>
+                </div>
+                
+                <div className="rounded-2xl shadow-2xl p-8 md:p-12 border border-gray-200">
+                  <form className="space-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="relative">
+                        <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                          Full Name
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary1 focus:ring-2 focus:ring-primary1/20 transition-all duration-200 bg-white text-gray-900 placeholder-gray-500"
+                            placeholder="John Doe"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="relative">
+                        <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                          Email Address
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary1 focus:ring-2 focus:ring-primary1/20 transition-all duration-200 bg-white text-gray-900 placeholder-gray-500"
+                            placeholder="john@example.com"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                        Phone Number
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary1 focus:ring-2 focus:ring-primary1/20 transition-all duration-200 bg-white text-gray-900 placeholder-gray-500"
+                          placeholder="+1 (555) 000-0000"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                        Your Message
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        rows={6}
+                        className="w-full px-4 py-3  rounded-lg border border-gray-300 focus:border-primary1 focus:ring-2 focus:ring-primary1/20 transition-all duration-200 bg-white text-gray-900 placeholder-gray-500 resize-none"
+                        placeholder="Write your message here..."
+                        required
+                      />
+                    </div>
+
+                    <div className="mt-8">
+                      <button
+                        type="submit"
+                        className="w-full bg-primary  text-white px-6 py-4 rounded-lg font-semibold text-base focus:outline-none focus:ring-4 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+                      >
+                        Send Message
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-          </Container>
-        </FullContainer>
+          </div>
+        </div>
 
         <Footer
           blog_list={blog_list}

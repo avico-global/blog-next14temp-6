@@ -67,8 +67,20 @@ export default function Categories({
       <div className="flex flex-col min-h-screen justify-between">
         <Head>
           <meta charSet="UTF-8" />
-          <title>{category?.replaceAll("-", " ")}</title>
-          <meta name="description" content={meta?.description} />
+          <title>
+            {" "}
+            {meta?.title?.replaceAll(
+              "##category##",
+              category?.replaceAll("-", " ")
+            )}{" "}
+          </title>
+          <meta
+            name="description"
+            content={meta?.description.replaceAll(
+              "##category##",
+              category?.replaceAll("-", " ")
+            )}
+          />
           <link rel="author" href={`http://${domain}`} />
           <link rel="publisher" href={`http://${domain}`} />
           <link rel="canonical" href={`http://${domain}`} />
@@ -307,3 +319,6 @@ export async function getServerSideProps({ req, query }) {
     },
   };
 }
+
+
+
