@@ -129,7 +129,7 @@ export default function Contact({
                   <p className="text-lg text-gray-600">We&apos;d love to hear from you. Please fill out this form.</p>
                 </div>
                 
-                <div className="rounded-2xl shadow-2xl p-8 md:p-12 border border-gray-200">
+                <div className="rounded-2xl  p-8 md:p-12 border bg-white/75 border-gray-200">
                   <form className="space-y-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div className="relative">
