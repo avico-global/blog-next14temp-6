@@ -68,11 +68,14 @@ export default function Categories({
         <Head>
           <meta charSet="UTF-8" />
           <title>
-            {" "}
-            {meta?.title?.replaceAll(
+          {meta?.title?.replaceAll(
               "##category##",
-              category?.replaceAll("-", " ")
-            )}{" "}
+              category
+                ?.replaceAll("-", " ")
+                .split(" ")
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ")
+            )}
           </title>
           <meta
             name="description"
@@ -319,6 +322,3 @@ export async function getServerSideProps({ req, query }) {
     },
   };
 }
-
-
-
