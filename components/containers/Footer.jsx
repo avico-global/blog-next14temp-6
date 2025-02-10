@@ -24,6 +24,7 @@ export default function Footer({ logo, imagePath }) {
               <a
                 key={index}
                 href="#"
+                title={`${Icon.name} Icon` }
                 className="hover:bg-white/10 border border-white/20 rounded-full p-2 transition-all duration-300 hover:scale-110"
               >
                 <Icon size={20} />
@@ -44,6 +45,7 @@ export default function Footer({ logo, imagePath }) {
               <Link
                 key={link.title}
                 href={link.href}
+                title={link.title}
                 onClick={link.onClick}
                 className="text-sm uppercase hover:text-button transition-colors duration-300"
               >

@@ -49,7 +49,7 @@ function BlogCard({
       >
         <Image
           src={image}
-          title={imageTitle}
+          title={imageTitle || "Image Title"}
           alt={altImage || tagline}
           priority={false}
           width={298}

@@ -106,6 +106,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                           <Image
                             src={`${imagePath}/${category.image}`}
                             alt={category.title}
+                            title={category.title}
                             width={60}
                             height={100}
                             className="rounded-md h-14"
@@ -232,6 +233,7 @@ const SidebarBlogItem = ({ blog, imagePath, sanitizeUrl }) => (
       <Image
         src={blog.image ? `${imagePath}/${blog.image}` : "/no-image.png"}
         alt={blog.altText || "Article Thumbnail"}
+        title={blog.imageTitle ||blog.title || "Article Thumbnail"  }
         fill
         className="object-cover hover:scale-125 transition-all"
         style={{ objectFit: "cover" }}

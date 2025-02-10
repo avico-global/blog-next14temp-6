@@ -125,7 +125,7 @@ export default function Rightbar({
             >
               <Image
                 src={`${imagePath}/${item.image}`}
-                title={item.title}
+                title={item.imageTitle || item.title || "Article Thumbnail"}
                 alt={item.tagline || item.altText}
                 priority={false}
                 width={298}

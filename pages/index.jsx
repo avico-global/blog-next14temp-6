@@ -168,7 +168,7 @@ export default function Home({
                         >
                           <Image
                             src={`${imagePath}/${item.image || "no-image.png"}`}
-                            title={item.imageTitle}
+                            title={item.imageTitle || item.title || "Article Thumbnail"}
                             alt={item.altImage || item.tagline}
                             priority={false}
                             width={298}

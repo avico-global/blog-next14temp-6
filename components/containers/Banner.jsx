@@ -66,7 +66,7 @@ export default function Banner({ image, data, blog_list, imagePath }) {
                   }
                   author={item.author}
                   date={item.published_at}
-                  imageTitle={item.imageTitle}
+                  imageTitle={item.imageTitle ||item.title || "Article Thumbnail" }
                   altImage={item.altImage}
                   tagline={item.tagline}
                 />
