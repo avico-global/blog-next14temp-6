@@ -40,11 +40,12 @@ const Logo = ({ logo, imagePath }) => {
   const imageSrc = `${imagePath}/${logo.file_name}`;
 
   // Calculate dynamic height for different screen sizes
-  const dynamicLogoHeight = windowWidth < 768 
-    ? Math.min(40, logoHeight)
-    : windowWidth < 1200 
-    ? Math.min(Math.floor(logoHeight * 0.85), logoHeight)
-    : logoHeight;
+  const dynamicLogoHeight =
+    windowWidth < 768
+      ? Math.min(40, logoHeight)
+      : windowWidth < 1200
+      ? Math.min(Math.floor(logoHeight * 0.85), logoHeight)
+      : logoHeight;
 
   // Calculate width while maintaining aspect ratio
   const aspectRatio = logoWidth / logoHeight;
@@ -54,8 +55,8 @@ const Logo = ({ logo, imagePath }) => {
   const logoStyle = {
     height: `${dynamicLogoHeight}px`,
     width: `${dynamicLogoWidth}px`,
-    objectFit: 'contain',
-    maxWidth: '120%',
+    objectFit: "contain",
+    maxWidth: "120%",
   };
 
   return (

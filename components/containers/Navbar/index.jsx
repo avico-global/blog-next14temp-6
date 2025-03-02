@@ -61,10 +61,10 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
 
   return (
     <>
-      <FullContainer className="bg-primary text-white sticky top-0 z-20 shadow-md">
+      <FullContainer className="bg-primary text-white sticky top-0 z-20 shadow-md py-2.5">
         <Container>
           <div className="flex items-center justify-between gap-3 mx-auto w-full">
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
               <Menu
                 onClick={() => setSidebar(true)}
                 className="cursor-pointer w-8 hover:scale-110 transition-transform"
