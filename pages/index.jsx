@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 // Components
 import Head from "next/head";
@@ -40,6 +40,9 @@ export default function Home({
   tag_list,
   page,
 }) {
+  const [visiblePosts, setVisiblePosts] = useState(9);
+  const postsPerLoad = 9;
+
   useEffect(() => {
     fetch("/api/get-images")
       .then((response) => response.json())
@@ -72,6 +75,10 @@ export default function Home({
       router.replace("/about");
     }
   }, [category, router]);
+
+  const handleShowMore = () => {
+    setVisiblePosts((prev) => prev + postsPerLoad);
+  };
 
   return (
     page?.enable && (
@@ -130,26 +137,19 @@ export default function Home({
         />
 
         <TrendingNews blog_list={blog_list} imagePath={imagePath} />
+        <MostPopular blog_list={blog_list} imagePath={imagePath} />
 
         <FullContainer className="py-20">
           <Container>
-            <div className="border-t-2 pt-5 text-center py-14 w-full flex flex-col items-center">
-              <h2 className="px-6 text-4xl font-bold -mt-10 w-fit bg-gray-50">
-                Latest Posts
-              </h2>
-              <p className="mt-4 text-gray-400">
-                Get fresh insights and updates across all categories.
-              </p>
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full">
               <div className="col-span-1 md:col-span-2 flex flex-col gap-10">
+                {/* Featured Post First */}
                 {blog_list?.map(
                   (item, index) =>
                     item.isFeatured && (
                       <div
                         key={index}
-                        className={`relative overflow-hidden group h-[60vh] w-full cursor-pointer`}
+                        className={`relative overflow-hidden group h-[40vh] md:h-[60vh] w-full cursor-pointer mb-10`}
                         onClick={() =>
                           handleNavigation(
                             `/${encodeURI(
@@ -168,7 +168,11 @@ export default function Home({
                         >
                           <Image
                             src={`${imagePath}/${item.image || "no-image.png"}`}
-                            title={item.imageTitle || item.title || "Article Thumbnail"}
+                            title={
+                              item.imageTitle ||
+                              item.title ||
+                              "Article Thumbnail"
+                            }
                             alt={item.altImage || item.tagline}
                             priority={false}
                             width={298}
@@ -180,7 +184,7 @@ export default function Home({
                           />
                         </Link>
 
-                        <div className="flex flex-col justify-end z-10 w-full right-0 bg-black/30 group-hover:bg-black/60 transition-all duration-500 md:w-auto gap-8 cursor-pointer absolute top-0 h-full text-white p-12 left-0">
+                        <div className="flex flex-col justify-end z-10 w-full right-0 bg-black/30 group-hover:bg-black/60 transition-all duration-500 md:w-auto gap-4 md:gap-8 cursor-pointer absolute top-0 h-full text-white p-6 md:p-12 left-0">
                           <p className="uppercase text-sm font-semibold bg-white text-black py-0.5 px-3 w-fit">
                             Featured
                           </p>
@@ -190,7 +194,7 @@ export default function Home({
                               href={`/${encodeURI(
                                 sanitizeUrl(item.article_category)
                               )}/${encodeURI(sanitizeUrl(item.title))}`}
-                              className="font-medium text-4xl underline-white leading-tight"
+                              className="font-medium text-2xl md:text-4xl underline-white leading-tight"
                             >
                               {item.title}
                             </Link>
@@ -206,77 +210,140 @@ export default function Home({
                     )
                 )}
 
-                {/* Must Read Section */}
-                {blog_list?.reverse().map((item, index) => (
-                  <div
-                    key={index}
-                    className="grid grid-cols-2 bg-white shadow-md group"
-                  >
-                    <Link
-                      title={item.article_category || "category"}
-                      href={`/${encodeURI(
-                        sanitizeUrl(item.article_category)
-                      )}/${encodeURI(sanitizeUrl(item.title))}`}
-                      imageHeight="h-72 md:h-[420px]"
-                      imageTitle={
-                        item.imageTitle || item.title || "Blog Image Title"
-                      }
-                      className="relative overflow-hidden"
+                {/* Latest Posts Heading - Left aligned but matching Trending News style */}
+                <div className="border-t border-gray-300 pt-5 w-full">
+                  <h2 className="pr-6 text-4xl font-bold -mt-10 bg-secondary w-fit">
+                    Latest Articles
+                  </h2>
+                  <p className="mt-4 text-gray-500">
+                    Discover our most recent stories and insights
+                  </p>
+                </div>
+
+                {/* Latest Posts Grid */}
+                {blog_list
+                  ?.reverse()
+                  .slice(0, visiblePosts)
+                  .map((item, index) => (
+                    <div
+                      key={index}
+                      className="grid grid-cols-1 md:grid-cols-2 bg-white border border-gray-100 group overflow-hidden rounded-xl"
                     >
-                      <Image
-                        src={
-                          item.image
-                            ? `${imagePath}/${item.image}`
-                            : "/no-image.png"
-                        }
-                        alt={
-                          item.altImage || item.tagline || "Article Thumbnail"
-                        }
-                        className="w-full h-full object-cover group-hover:scale-125 transition-all duration-1000"
-                        title={
+                      <Link
+                        title={item.article_category || "category"}
+                        href={`/${encodeURI(
+                          sanitizeUrl(item.article_category)
+                        )}/${encodeURI(sanitizeUrl(item.title))}`}
+                        imageHeight="h-48 md:h-80"
+                        imageTitle={
                           item.imageTitle || item.title || "Blog Image Title"
                         }
-                        width={600}
-                        height={400}
-                        priority={false}
-                        loading="lazy"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                      />
-                    </Link>
+                        className="relative overflow-hidden h-48 md:h-80"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent z-10 group-hover:opacity-0 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-blue-600/20 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <Image
+                          src={
+                            item.image
+                              ? `${imagePath}/${item.image}`
+                              : "/no-image.png"
+                          }
+                          alt={
+                            item.altImage || item.tagline || "Article Thumbnail"
+                          }
+                          className="w-full h-full object-cover group-hover:scale-125 transition-all duration-1000"
+                          title={
+                            item.imageTitle || item.title || "Blog Image Title"
+                          }
+                          width={600}
+                          height={400}
+                          priority={false}
+                          loading="lazy"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                      </Link>
 
-                    <div className="flex flex-col justify-center p-8">
-                      <p className="text-lg font-medium capitalize text-gray-400">
-                        {item.article_category}
-                      </p>
+                      <div className="flex flex-col justify-center py-4 md:py-6 px-4 md:px-8 group-hover:bg-gradient-to-br from-gray-50 to-blue-50/30 transition-all duration-500">
+                        <div className="flex items-center gap-2 mb-4">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center ring-2 ring-white">
+                            <span className="text-sm font-medium capitalize text-blue-600">
+                              {item.author?.charAt(0)}
+                            </span>
+                          </div>
+                          <div className="flex flex-col">
+                            <p className="text-sm font-medium capitalize text-gray-900">
+                              {item.author}
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              {dayjs(item?.published_at)?.format("MMM D, YYYY")}
+                            </p>
+                          </div>
+                        </div>
 
-                      <div className="mt-4">
-                        <Link
-                          href={`/${encodeURI(
-                            sanitizeUrl(item.article_category)
-                          )}/${encodeURI(sanitizeUrl(item.title))}`}
-                          title={item.title}
-                          className="text-2xl font-semibold underline-white"
-                        >
-                          {item.title}
-                        </Link>
-                      </div>
+                        <div className="space-y-3 md:space-y-4">
+                          <Link
+                            href={`/${encodeURI(
+                              sanitizeUrl(item.article_category)
+                            )}/${encodeURI(sanitizeUrl(item.title))}`}
+                            title={item.title}
+                            className="text-xl md:text-2xl font-semibold underline-white"
+                          >
+                            {item.title}
+                          </Link>
 
-                      <p className="mt-2 text-gray-500">
-                        {item.tagline?.slice(0, 100)}...
-                      </p>
+                          <p className="text-gray-600 line-clamp-3 leading-relaxed">
+                            {item.tagline}
+                          </p>
+                        </div>
 
-                      <div className="flex items-center gap-2 mt-5">
-                        <p className="font-medium">
-                          <span className="text-gray-400">By</span>:{" "}
-                          {item.author}
-                        </p>
-                        <p className=" text-gray-400 font-medium">
-                          {dayjs(item?.published_at)?.format("MMM D, YYYY")}
-                        </p>
+                        <div className="mt-6 flex items-center gap-4">
+                          <Link
+                            href={`/${encodeURI(
+                              sanitizeUrl(item.article_category)
+                            )}/${encodeURI(sanitizeUrl(item.title))}`}
+                            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors group/link"
+                          >
+                            Read More
+                            <svg
+                              className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 5l7 7-7 7"
+                              />
+                            </svg>
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+
+                {blog_list && visiblePosts < blog_list.length && (
+                  <button
+                    onClick={handleShowMore}
+                    className="mx-auto px-8 w-full justify-center hover:bg-gray-900 hover:text-white transition-all duration-500 py-3 border border-gray-900 text-gray-900 flex items-center gap-2 rounded"
+                  >
+                    Show More
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                )}
               </div>
 
               {/* Sidebar */}
@@ -417,4 +484,88 @@ export async function getServerSideProps({ req }) {
       tag_list: tag_list?.data[0]?.value || null,
     },
   };
+}
+
+function MostPopular({ blog_list = [], imagePath }) {
+  const popularBlogs = blog_list.filter((item) => item.isPopular).slice(0, 3);
+
+  return (
+    popularBlogs?.length > 0 && (
+      <FullContainer className="bg-gray-50 py-8 md:py-16 pt-12 md:pt-20">
+        <Container>
+          <div className="border-t border-gray-300 pt-5 text-center w-full flex flex-col items-center">
+            <h2 className="px-6 text-4xl font-bold -mt-10 bg-gray-50 w-fit">
+              Most Popular
+            </h2>
+            <p className="mt-4 text-gray-500">
+              Top trending stories of the week
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mt-8 md:mt-16">
+            {popularBlogs.map((item, index) => (
+              <div
+                key={index}
+                className="group bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300"
+              >
+                <Link
+                  href={`/${encodeURI(
+                    sanitizeUrl(item.article_category)
+                  )}/${encodeURI(sanitizeUrl(item.title))}`}
+                  className="relative h-40 md:h-48 block overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent z-10" />
+                  <Image
+                    src={`${imagePath}/${item.image || "no-image.png"}`}
+                    alt={item.altImage || item.tagline}
+                    width={400}
+                    height={300}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    style={{ objectFit: "cover" }}
+                  />
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="bg-blue-600 text-white text-xs font-medium px-2.5 py-1 rounded-full">
+                      {item.article_category}
+                    </span>
+                  </div>
+                </Link>
+
+                <div className="p-4 md:p-6">
+                  <span className="w-full text-left">
+                    <Link
+                      href={`/${encodeURI(
+                        sanitizeUrl(item.article_category)
+                      )}/${encodeURI(sanitizeUrl(item.title))}`}
+                      className="text-lg md:text-xl font-semibold text-gray-900 mb-2 md:mb-3 underline-white"
+                    >
+                      {item.title}
+                    </Link>
+                  </span>
+                  <p className="text-gray-600 mt-3 text-sm line-clamp-2 mb-4">
+                    {item.tagline}
+                  </p>
+
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center">
+                      <span className="text-blue-600 font-medium">
+                        {item.author?.charAt(0)}
+                      </span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-medium text-gray-900">
+                        {item.author}
+                      </span>
+                      <span className="text-gray-500 text-xs">
+                        {dayjs(item.published_at).format("MMM D, YYYY")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </FullContainer>
+    )
+  );
 }

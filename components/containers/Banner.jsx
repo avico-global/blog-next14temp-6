@@ -14,6 +14,8 @@ export default function Banner({ image, data, blog_list, imagePath }) {
         color: data?.textColor || "white",
       }}
     >
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-0" />
+
       <Image
         src={image}
         title={data?.imageTitle || data?.title || "Banner"}
@@ -21,7 +23,7 @@ export default function Banner({ image, data, blog_list, imagePath }) {
         priority={true}
         fill={true}
         loading="eager"
-        className="-z-10 w-full h-52  "
+        className="-z-10 w-full h-52 transition-transform duration-700 hover:scale-105"
         style={{ objectFit: "cover" }}
         sizes="(max-width: 320px) 320px,
                (max-width: 480px) 480px,
@@ -34,23 +36,25 @@ export default function Banner({ image, data, blog_list, imagePath }) {
                (max-width: 3840px) 3840px,
                100vw"
       />
-      <Container className="py-24">
-        <div className="w-full grid grid-cols-1  md:grid-cols-banner gap-16 text-white lg:h-[50vh]">
+
+      <Container className="py-16 relative z-10">
+        <div className="w-full grid grid-cols-1 md:grid-cols-banner gap-16 text-white lg:min-h-[60vh]">
           <div className="relative flex flex-col justify-center">
             <h1
-              className={`font-medium capitalize text-5xl md:text-5xl lg:text-6xl leading-tight text-center lg:text-left`}
+              className={`font-bold capitalize text-5xl md:text-6xl leading-tight text-center lg:text-left text-shadow-lg`}
             >
               {data?.title}
             </h1>
             {data?.tagline && (
               <p
-                className={`leading-tight text-white/70 text-center lg:text-left mt-10`}
+                className={`leading-relaxed text-xl text-white/80 text-center lg:text-left mt-8 font-light max-w-2xl`}
               >
                 {data?.tagline}
               </p>
             )}
           </div>
-          <div className="flex flex-col justify-center gap-10">
+
+          <div className="flex flex-col justify-center">
             {blog_list
               ?.slice(-3)
               .reverse()
@@ -66,7 +70,9 @@ export default function Banner({ image, data, blog_list, imagePath }) {
                   }
                   author={item.author}
                   date={item.published_at}
-                  imageTitle={item.imageTitle ||item.title || "Article Thumbnail" }
+                  imageTitle={
+                    item.imageTitle || item.title || "Article Thumbnail"
+                  }
                   altImage={item.altImage}
                   tagline={item.tagline}
                 />
@@ -89,12 +95,11 @@ function BlogCard({
   author,
 }) {
   return (
-    <div className="grid grid-cols-bblog gap-5 group">
+    <div className="grid grid-cols-bblog gap-6 group hover:bg-white/5 p-4 rounded-lg transition-all duration-300">
       <Link
         href={href || "#"}
         title={imageTitle}
-        className="relative overflow-hidden w-full h-32
-        "
+        className="relative overflow-hidden w-full h-36 rounded-lg"
       >
         <Image
           src={image}
@@ -105,7 +110,7 @@ function BlogCard({
           height={195}
           loading="lazy"
           sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw, 33vw"
-          className="w-full h-full group-hover:scale-150 transition-all duration-700"
+          className="w-full h-full group-hover:scale-125 transition-all duration-500"
           style={{ objectFit: "cover" }}
         />
       </Link>
@@ -114,14 +119,15 @@ function BlogCard({
         <div>
           <Link
             href={href || ""}
-            className="text-xl font-medium underline-white"
+            className="text-xl font-medium hover:text-primary transition-colors duration-300 line-clamp-2"
           >
             {title}
           </Link>
         </div>
-        <div className="flex items-center gap-5 mt-2">
-          <p className="text-white/60">{author}</p> {" - "}
-          <p className="text-white/60">{date}</p>
+        <div className="flex items-center gap-3 mt-3 text-sm">
+          <p className="text-white/70">{author}</p>
+          <span className="text-white/40">•</span>
+          <p className="text-white/70">{date}</p>
         </div>
       </div>
     </div>

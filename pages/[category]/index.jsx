@@ -68,7 +68,7 @@ export default function Categories({
         <Head>
           <meta charSet="UTF-8" />
           <title>
-          {meta?.title?.replaceAll(
+            {meta?.title?.replaceAll(
               "##category##",
               category
                 ?.replaceAll("-", " ")
@@ -109,8 +109,8 @@ export default function Categories({
             <h1 className="text-4xl font-semibold capitalize pb-8 pt-5 w-full">
               Exploring: {category?.replace("-", " ")}
             </h1>
-            <div className="grid grid-cols-1 md:grid-cols-home gap-12 w-full">
-              <div className="w-full flex flex-col gap-14">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full">
+              <div className="w-full flex flex-col gap-14 col-span-2">
                 {filteredBlogList.map((item, index) => (
                   <div key={index} className="group flex flex-col gap-4">
                     <Link
@@ -119,7 +119,7 @@ export default function Categories({
                         item?.title
                       )}`}
                     >
-                      <div className="overflow-hidden relative min-h-40 rounded lg:min-h-[500px] w-full bg-black flex-1">
+                      <div className="overflow-hidden relative min-h-40 rounded-xl lg:min-h-[500px] w-full bg-black flex-1">
                         <Image
                           title={
                             item.imageTitle || item.title || "Article Thumbnail"

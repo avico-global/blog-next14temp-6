@@ -6,20 +6,20 @@ import FullContainer from "../common/FullContainer";
 import { sanitizeUrl } from "@/lib/myFun";
 
 export default function TrendingNews({ blog_list = [], imagePath }) {
-  const mustReadBlogs = blog_list.filter((item) => item.isMustRead);
+  const trendingBlogs = blog_list.filter((item) => item.trendingNews);
   return (
-    mustReadBlogs?.length > 0 && (
+    trendingBlogs?.length > 0 && (
       <FullContainer className="bg-primary py-24">
         <Container>
           <div className="border-t border-gray-500 pt-5 text-center w-full flex flex-col items-center text-white">
             <h2 className="px-6 text-4xl font-bold -mt-10 bg-primary w-fit">
-              Trending News
+              Trending Posts
             </h2>
             <p className="mt-4 text-gray-400">
               Stay updated with the most popular and timely stories.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-10 w-full mt-16">
-              {mustReadBlogs.map((item, index) => (
+              {trendingBlogs.map((item, index) => (
                 <BlogCard
                   key={item.id || index}
                   title={item.title}
@@ -59,7 +59,7 @@ function BlogCard({
       <Link
         href={href || "#"}
         title={imageTitle}
-        className="relative overflow-hidden w-full h-[195px]"
+        className="relative overflow-hidden w-full h-[195px] rounded"
       >
         <Image
           src={image}

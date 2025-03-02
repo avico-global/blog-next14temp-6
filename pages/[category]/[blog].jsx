@@ -151,7 +151,7 @@ export default function Blog({
               {myblog?.value.tagline}
             </p>
             <div className="flex items-center justify-center gap-4">
-              <p>{myblog?.value.author}</p> -{" "}
+              <p className="capitalize">{myblog?.value.author}</p> -{" "}
               <p>{myblog?.value.published_at}</p>
             </div>
           </Container>

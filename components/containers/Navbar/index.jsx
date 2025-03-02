@@ -61,20 +61,24 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
 
   return (
     <>
-      <FullContainer className="bg-primary text-white sticky top-0 z-20">
+      <FullContainer className="bg-primary text-white sticky top-0 z-20 shadow-md">
         <Container>
-          <div className="flex items-center justify-between gap-3 mx-auto py-5 w-full">
+          <div className="flex items-center justify-between gap-3 mx-auto w-full">
             <div className="flex items-center gap-6">
               <Menu
                 onClick={() => setSidebar(true)}
-                className="cursor-pointer w-8"
+                className="cursor-pointer w-8 hover:scale-110 transition-transform"
                 aria-label="Open Sidebar"
               />
               <Logo logo={logo} imagePath={imagePath} />
             </div>
 
-            <nav className="hidden lg:flex items-center gap-5 uppercase">
-              <Link href="/" title="Home" className="hover:text-gray-300">
+            <nav className="hidden lg:flex items-center gap-8 uppercase text-sm tracking-wider">
+              <Link
+                href="/"
+                title="Home"
+                className="hover:text-gray-200 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white hover:after:w-full after:transition-all text-sm"
+              >
                 Home
               </Link>
               <div
@@ -83,37 +87,48 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                 onMouseLeave={() => setIsDropdownOpen(false)}
               >
                 <button
-                  className="hover:text-gray-300 uppercase"
+                  className="hover:text-gray-200 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white group-hover:after:w-full after:transition-all uppercase text-sm"
                   aria-expanded={isDropdownOpen}
                   aria-controls="categoriesDropdown"
                 >
                   Categories
                 </button>
 
+                {/* Add invisible bridge to prevent dropdown from closing */}
+                <div className="absolute h-3 w-full -bottom-3"></div>
+
                 {isDropdownOpen && (
                   <div
                     id="categoriesDropdown"
-                    className="absolute left-0 top-full bg-primary text-white shadow-xl rounded-md z-50 p-2 w-[300px] grid grid-cols-1"
+                    className="absolute left-0 top-[calc(100%+0.75rem)] bg-gradient-to-b from-black/30 to-black/50 backdrop-blur-xl text-white shadow-2xl rounded-xl z-50 w-[400px] grid grid-cols-1 border border-white/20 transform transition-all duration-200 ease-out"
                   >
                     {categories.map((category, index) => (
                       <Link
                         key={index}
                         href={`/${sanitizeUrl(category.title)}`}
-                        className="border-b last:border-none"
+                        className="group"
                         title={category.title}
                       >
-                        <div className="flex items-center gap-4 hover:bg-gray-900 p-2 transition">
-                          <Image
-                            src={`${imagePath}/${category.image}`}
-                            alt={category.title}
-                            title={category.title}
-                            width={60}
-                            height={100}
-                            className="rounded-md h-14"
-                          />
-                          <span className="font-medium capitalize">
-                            {category.title}
-                          </span>
+                        <div className="flex items-center gap-4 hover:bg-white/15 rounded-lg p-3 transition-all duration-200 ease-out">
+                          <div className="relative w-16 h-16 overflow-hidden rounded-lg">
+                            <Image
+                              src={`${imagePath}/${category.image}`}
+                              alt={category.title}
+                              title={category.title}
+                              fill
+                              className="object-cover group-hover:scale-110 transition-transform duration-200"
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="font-medium text-base capitalize group-hover:text-white transition-colors">
+                              {category.title}
+                            </span>
+                            {category.description && (
+                              <span className="text-sm text-white/70 group-hover:text-white/90 transition-colors">
+                                {category.description}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </Link>
                     ))}
@@ -122,32 +137,36 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
               </div>
               <Link
                 title="Contact"
-                href="/contact"
-                className="hover:text-gray-300"
+                href="/contact-us"
+                className="hover:text-gray-200 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white hover:after:w-full after:transition-all text-sm"
               >
                 Contact Us
               </Link>
-              <Link title="About" href="/about" className="hover:text-gray-300">
+              <Link
+                title="About"
+                href="/about-us"
+                className="hover:text-gray-200 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white hover:after:w-full after:transition-all text-sm"
+              >
                 About Us
               </Link>
             </nav>
 
             {/* Search Section */}
             <div className="flex items-center justify-end gap-3 relative">
-              <div className="hidden lg:flex items-center border border-white/30 rounded-md px-4 gap-1">
+              <div className="hidden lg:flex items-center border border-white/20 rounded-full px-4 gap-2 hover:border-white/40 transition-colors bg-white/5">
                 <Search className="w-4 h-4" aria-hidden="true" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={handleSearchChange}
-                  className="p-2 transition-opacity duration-300 ease-in-out flex-1 outline-none bg-transparent"
+                  className="p-2.5 transition-all duration-300 flex-1 outline-none bg-transparent placeholder:text-white/50"
                   placeholder="Search..."
                   ref={searchInputRef}
                 />
               </div>
 
               {searchQuery && (
-                <div className="absolute top-full p-3 right-0 bg-white shadow-2xl rounded-md mt-1 z-10 w-[calc(100vw-40px)] lg:w-[650px]">
+                <div className="absolute top-full p-3 right-0 bg-black/70 backdrop-blur-lg max-h-[50vh] overflow-y-auto border border-white/10 shadow-2xl rounded-lg mt-2 z-10 w-[calc(100vw-40px)] lg:w-[650px]">
                   {filteredBlogs.length > 0 ? (
                     filteredBlogs.map((item, index) => (
                       <Link
@@ -157,13 +176,13 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                         )}/${sanitizeUrl(item?.title)}`}
                         title={item.title}
                       >
-                        <div className="p-2 hover:bg-gray-200 border-b text-gray-600">
+                        <div className="p-2.5 hover:bg-white/10 rounded-md transition-all border-b border-white/10 last:border-none">
                           {item.title}
                         </div>
                       </Link>
                     ))
                   ) : (
-                    <div className="p-2 text-gray-500">No results found</div>
+                    <div className="p-2.5 text-white/70">No results found</div>
                   )}
                 </div>
               )}
@@ -233,7 +252,7 @@ const SidebarBlogItem = ({ blog, imagePath, sanitizeUrl }) => (
       <Image
         src={blog.image ? `${imagePath}/${blog.image}` : "/no-image.png"}
         alt={blog.altText || "Article Thumbnail"}
-        title={blog.imageTitle ||blog.title || "Article Thumbnail"  }
+        title={blog.imageTitle || blog.title || "Article Thumbnail"}
         fill
         className="object-cover hover:scale-125 transition-all"
         style={{ objectFit: "cover" }}
@@ -291,11 +310,11 @@ const SidebarLinks = ({
       )}
     </div>
 
-    <Link href="/contact" title="Contact">
+    <Link href="/contact-us" title="Contact">
       Contact Us
     </Link>
-    <Link href="/about" title="About" className="uppercase text-sm mb-2">
-      About
+    <Link href="/about-us" title="About" className="uppercase text-sm mb-2">
+      About Us
     </Link>
   </div>
 );

@@ -1,19 +1,16 @@
 import React from "react";
 import Head from "next/head";
-import Map from "@/components/containers/Map";
 import Navbar from "@/components/containers/Navbar";
 import Footer from "@/components/containers/Footer";
-import Container from "@/components/common/Container";
 import GoogleTagManager from "@/lib/GoogleTagManager";
-import FullContainer from "@/components/common/FullContainer";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 
 import { callBackendApi, getDomain, getImagePath } from "@/lib/myFun";
 
 import { Roboto } from "next/font/google";
-import useBreadcrumbs from "@/lib/useBreadcrumbs";
 import JsonLd from "@/components/json/JsonLd";
-import { MailOpen, MapIcon, Phone } from "lucide-react";
+import useBreadcrumbs from "@/lib/useBreadcrumbs";
+
 const myFont = Roboto({
   subsets: ["cyrillic"],
   weight: ["400", "700"],
@@ -84,7 +81,7 @@ export default function Contact({
           contact_details={contact_details}
         />
 
-<div className=" pt-6 pb-10 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className=" pt-6 pb-10 px-4 sm:px-6 lg:px-8 bg-gray-50">
           <div className="max-w-5xl mx-auto">
             {/* Form Section */}
             <div className="text-center mb-12">
