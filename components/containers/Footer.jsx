@@ -36,7 +36,7 @@ export default function Footer({ logo, imagePath }) {
           <nav className="flex flex-wrap justify-center gap-6 w-full max-w-3xl">
             {[
               { title: "Home", href: "/" },
-              { title: "About", href: "/about" },
+              { title: "About", href: "/about-us" },
               { title: "Contact", href: "/contact" },
               { title: "Terms & Conditions", href: "/terms-and-conditions" },
               { title: "Privacy Policy", href: "/privacy-policy" },
