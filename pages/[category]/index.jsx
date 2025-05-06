@@ -86,7 +86,7 @@ export default function Categories({
           />
           <link rel="author" href={`https://${domain}`} />
           <link rel="publisher" href={`https://${domain}`} />
-          <link rel="canonical" href={`https://${domain}`} />
+          <link rel="canonical" href={`https://${domain}/${category}`} />
           <meta name="theme-color" content="#008DE5" />
           <GoogleTagManager />
         </Head>
