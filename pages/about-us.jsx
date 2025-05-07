@@ -62,7 +62,7 @@ export default function About({
           />
           <GoogleTagManager />
           <meta
-            name="google-site-verification"
+            name="google-site-verification" 
             content="zbriSQArMtpCR3s5simGqO5aZTDqEZZi9qwinSrsRPk"
           />
           <link
@@ -168,7 +168,7 @@ export async function getServerSideProps({ req }) {
   const blog_list = await callBackendApi({ domain, type: "blog_list" });
   const about_me = await callBackendApi({ domain, type: "about_me" });
   const nav_type = await callBackendApi({ domain, type: "nav_type" });
-  const meta = await callBackendApi({ domain, type: "meta_home" });
+  const meta = await callBackendApi({ domain, type: "meta-about" });
 
   const contact_details = await callBackendApi({
     domain,
