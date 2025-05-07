@@ -37,7 +37,7 @@ export default function Footer({ logo, imagePath }) {
             {[
               { title: "Home", href: "/" },
               { title: "About", href: "/about-us" },
-              { title: "Contact", href: "/contact" },
+              { title: "Contact", href: "/contact-us" },
               { title: "Terms & Conditions", href: "/terms-and-conditions" },
               { title: "Privacy Policy", href: "/privacy-policy" },
               { title: "Sitemap", href: "/sitemap.xml", onClick: handleClick },
