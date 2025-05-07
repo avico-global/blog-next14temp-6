@@ -519,6 +519,7 @@ function MostPopular({ blog_list = [], imagePath }) {
                     src={`${imagePath}/${item.image || "no-image.png"}`}
                     alt={item.altImage || item.tagline}
                     width={400}
+                    title={item.imageTitle || item.title || "Article Thumbnail"}
                     height={300}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     style={{ objectFit: "cover" }}

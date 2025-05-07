@@ -18,6 +18,7 @@ export default function Blog({
       <Link href={title?.toLowerCase().replaceAll(" ", "-")}>
         <div className="relative overflow-hidden w-full h-[60vh] mt-8">
           <Image
+            title={title || "Blog Image"}
             src={image}
             fill={true}
             quality={80}

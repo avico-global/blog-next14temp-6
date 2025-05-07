@@ -121,7 +121,7 @@ export default function Blog({
               myblog?.value?.tagline ||
               "No Banner Found"
             }
-            title={myblog?.value.imageTitle || myblog?.value.title}
+            title={myblog?.value.imageTitle || myblog?.value.title || "Article Thumbnail"}
             priority={true}
             fill={true}
             loading="eager"

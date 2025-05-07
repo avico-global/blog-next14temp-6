@@ -63,7 +63,7 @@ function BlogCard({
       >
         <Image
           src={image}
-          title={imageTitle}
+          title={imageTitle || "Article Thumbnail"}
           alt={altImage || tagline}
           priority={false}
           width={400}

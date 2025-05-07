@@ -151,7 +151,7 @@ export default function Categories({
                         >
                           <div className="overflow-hidden relative min-h-40 rounded lg:min-h-52 w-full bg-black flex-1">
                             <Image
-                              title={item?.title || item.imageTitle}
+                              title={item?.title || item.imageTitle || "Article Thumbnail"}
                               src={
                                 item.image
                                   ? `${imagePath}/${item.image}`

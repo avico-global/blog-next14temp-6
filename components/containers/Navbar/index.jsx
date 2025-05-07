@@ -114,7 +114,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                             <Image
                               src={`${imagePath}/${category.image}`}
                               alt={category.title}
-                              title={category.title}
+                              title={category.title || "Article Thumbnail"}
                               fill
                               className="object-cover group-hover:scale-110 transition-transform duration-200"
                             />

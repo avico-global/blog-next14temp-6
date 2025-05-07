@@ -206,7 +206,7 @@ export default function Rightbar({
                   <div className="relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden">
                     <Image
                       src={`${imagePath}/${item.image}`}
-                      title={item.imageTitle || item.title}
+                      title={item.imageTitle || item.title || "Article Thumbnail"}
                       alt={item.tagline || item.altText}
                       fill
                       loading="lazy"
