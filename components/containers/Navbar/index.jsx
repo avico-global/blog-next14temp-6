@@ -75,8 +75,8 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
 
             <nav className="hidden lg:flex items-center gap-8 uppercase text-sm tracking-wider">
               <Link
-                href="/"
                 title="Home"
+                href="/"
                 className="hover:text-gray-200 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white hover:after:w-full after:transition-all text-sm"
               >
                 Home
@@ -107,7 +107,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                         key={index}
                         href={`/${sanitizeUrl(category.title)}`}
                         className="group"
-                        title={category.title}
+                        title={category.title || "Category Link"}
                       >
                         <div className="flex items-center gap-4 hover:bg-white/15 rounded-lg p-3 transition-all duration-200 ease-out">
                           <div className="relative w-16 h-16 overflow-hidden rounded-lg">
@@ -174,7 +174,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                         href={`/${sanitizeUrl(
                           item.article_category
                         )}/${sanitizeUrl(item?.title)}`}
-                        title={item.title}
+                        title={item.title || "Blog Title"}
                       >
                         <div className="p-2.5 hover:bg-white/10 rounded-md transition-all border-b border-white/10 last:border-none">
                           {item.title}
@@ -246,7 +246,7 @@ const SidebarBlogItem = ({ blog, imagePath, sanitizeUrl }) => (
   <div className="grid grid-cols-widget1 gap-4 py-3 border-b last:border-none">
     <Link
       href={`/${sanitizeUrl(blog.article_category)}/${sanitizeUrl(blog.title)}`}
-      title={blog.title}
+      title={blog.title || "Blog Title"}
       className="relative overflow-hidden"
     >
       <Image
@@ -260,7 +260,7 @@ const SidebarBlogItem = ({ blog, imagePath, sanitizeUrl }) => (
     </Link>
     <Link
       href={`/${sanitizeUrl(blog.article_category)}/${sanitizeUrl(blog.title)}`}
-      title={blog.title}
+      title={blog.title || "Blog Title"}
     >
       <p className="font-semibold leading-tight">{blog.title}</p>
     </Link>
@@ -292,7 +292,7 @@ const SidebarLinks = ({
             <Link
               key={index}
               href={`/${sanitizeUrl(category.title)}`}
-              title={category.title}
+              title={category.title || "Category Link"}
             >
               <div className="flex items-center gap-4 hover:bg-gray-900 p-2 transition">
                 {/* <Image

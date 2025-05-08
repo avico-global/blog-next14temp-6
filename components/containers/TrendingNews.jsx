@@ -58,7 +58,7 @@ function BlogCard({
     <div className="flex flex-col gap-4 group">
       <Link
         href={href || "#"}
-        title={imageTitle}
+        title={imageTitle || "Blog Image"}
         className="relative overflow-hidden w-full h-[195px] rounded"
       >
         <Image
@@ -81,6 +81,7 @@ function BlogCard({
 
       <span className="w-full text-left">
         <Link
+          title={title || "Blog Title"}
           href={href || ""}
           className="font-medium text-left leading-2 text-xl underline-white"
         >

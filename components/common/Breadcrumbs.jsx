@@ -27,7 +27,7 @@ export default function Breadcrumbs({ breadcrumbs, className }) {
                 ?.replaceAll(" ", "-")
                 ?.replaceAll("%20", "-")
                 ?.replaceAll("%E2%80%99", "'")
-                ?.replaceAll("%E2%80%93", "-")}
+                ?.replaceAll("%E2%80%93", "-") || "Breadcrumb Link"}
               href={breadcrumb.url}
               className="hover:underline transition-all"
             >

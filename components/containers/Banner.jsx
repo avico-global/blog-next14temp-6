@@ -98,7 +98,7 @@ function BlogCard({
     <div className="grid grid-cols-bblog gap-6 group hover:bg-white/5 p-4 rounded-lg transition-all duration-300">
       <Link
         href={href || "#"}
-        title={imageTitle}
+        title={imageTitle || "Blog Image"}
         className="relative overflow-hidden w-full h-36 rounded-lg"
       >
         <Image
@@ -118,6 +118,7 @@ function BlogCard({
       <div className="flex flex-col justify-center">
         <div>
           <Link
+            title={title || "Blog Title"}
             href={href || ""}
             className="text-xl font-medium hover:text-primary transition-colors duration-300 line-clamp-2"
           >

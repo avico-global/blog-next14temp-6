@@ -103,17 +103,20 @@ export default function Home({
             content="zbriSQArMtpCR3s5simGqO5aZTDqEZZi9qwinSrsRPk"
           />
           <link
+            title="Favicon"
             rel="apple-touch-icon"
             sizes="180x180"
             href={`${imagePath}/${favicon}`}
           />
           <link
+            title="Favicon"
             rel="icon"
             type="image/png"
             sizes="32x32"
             href={`${imagePath}/${favicon}`}
           />
           <link
+            title="Favicon"
             rel="icon"
             type="image/png"
             sizes="16x16"
@@ -163,7 +166,7 @@ export default function Home({
                           href={`/${encodeURI(
                             sanitizeUrl(item.article_category)
                           )}/${encodeURI(sanitizeUrl(item.title))}`}
-                          title={item.imageTitle}
+                          title={item.imageTitle || "Blog Image"}
                           className="relative overflow-hidden w-full h-full"
                         >
                           <Image
@@ -191,6 +194,7 @@ export default function Home({
 
                           <div className="max-w-2xl">
                             <Link
+                              title={item.title || "Blog Title"}
                               href={`/${encodeURI(
                                 sanitizeUrl(item.article_category)
                               )}/${encodeURI(sanitizeUrl(item.title))}`}
@@ -285,7 +289,7 @@ export default function Home({
                             href={`/${encodeURI(
                               sanitizeUrl(item.article_category)
                             )}/${encodeURI(sanitizeUrl(item.title))}`}
-                            title={item.title}
+                            title={item.title || "Blog Title"}
                             className="text-xl md:text-2xl font-semibold underline-white"
                           >
                             {item.title}
@@ -298,6 +302,7 @@ export default function Home({
 
                         <div className="mt-6 flex items-center gap-4">
                           <Link
+                            title={item.title || "Read More"}
                             href={`/${encodeURI(
                               sanitizeUrl(item.article_category)
                             )}/${encodeURI(sanitizeUrl(item.title))}`}
@@ -509,6 +514,7 @@ function MostPopular({ blog_list = [], imagePath }) {
                 className="group bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300"
               >
                 <Link
+                  title={item.title || "Blog Title"}
                   href={`/${encodeURI(
                     sanitizeUrl(item.article_category)
                   )}/${encodeURI(sanitizeUrl(item.title))}`}
@@ -534,6 +540,7 @@ function MostPopular({ blog_list = [], imagePath }) {
                 <div className="p-4 md:p-6">
                   <span className="w-full text-left">
                     <Link
+                      title={item.title || "Blog Title"}
                       href={`/${encodeURI(
                         sanitizeUrl(item.article_category)
                       )}/${encodeURI(sanitizeUrl(item.title))}`}

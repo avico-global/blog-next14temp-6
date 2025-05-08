@@ -84,7 +84,7 @@ export default function Rightbar({
             return (
               <Link
                 key={index}
-                title={item?.title}
+                title={item?.title || "Category Link"}
                 href={`/${encodeURI(sanitizeUrl(item?.title))}`}
                 className={cn(
                   "px-4 py-2.5 rounded-lg text-sm font-medium flex items-center justify-between group",
@@ -136,7 +136,7 @@ export default function Rightbar({
             {tag_list?.slice(0, 10)?.map((item, index) => (
               <Link
                 key={index}
-                title={item.tag}
+                title={item.tag || "Tag Link"}
                 href={`/tags/${encodeURI(sanitizeUrl(item.tag))}`}
                 className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-50 hover:bg-gray-100 
                           text-sm font-medium text-gray-700 rounded-lg transition-colors"
@@ -197,6 +197,7 @@ export default function Rightbar({
           {lastThreeBlogs.map((item, index) => (
             <article key={index} className="py-4 first:pt-0 last:pb-0">
               <Link
+                title={item?.title || "Blog Title"}
                 href={`/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
                   item?.title
                 )}`}

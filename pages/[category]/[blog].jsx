@@ -84,6 +84,7 @@ export default function Blog({
           />
           <GoogleTagManager />
           <link
+            title="Favicon"
             rel="icon"
             type="image/png"
             sizes="32x32"
@@ -128,7 +129,10 @@ export default function Blog({
             className="-z-10 w-full h-full object-cover absolute top-0"
           />
           <Container className="gap-8 lg:items-start lg:justify-end lg:text-left lg:min-h-[50vh]">
-            <Link href={`/${sanitizeUrl(myblog?.value?.article_category)}`}>
+            <Link
+              title={myblog?.value?.article_category || "Category Link"}
+              href={`/${sanitizeUrl(myblog?.value?.article_category)}`}
+            >
               <Badge className="hover:bg-green-500">
                 {myblog?.value?.article_category}
               </Badge>
