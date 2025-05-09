@@ -96,7 +96,7 @@ export default function About({
         <AboutBanner image={`${imagePath}/${about_me?.file_name}`} />
         <FullContainer>
           <Container className="py-16">
-            <div className="grid grid-cols-about gap-16 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-about gap-16 w-full">
               <div className={font2?.className}>
                 <div
                   className="prose-xl"
