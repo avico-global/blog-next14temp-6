@@ -6,6 +6,7 @@ import { sanitizeUrl } from "@/lib/myFun";
 import { Menu, Search, X } from "lucide-react";
 import Container from "@/components/common/Container";
 import FullContainer from "@/components/common/FullContainer";
+import Logo2 from "./Logo2";
 
 export default function Navbar({ logo, categories, imagePath, blog_list }) {
   const sidebarRef = useRef(null);
@@ -199,7 +200,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
         ref={sidebarRef}
       >
         <div className="flex items-center justify-between">
-          <Logo logo={logo} imagePath={imagePath} />
+          <Logo2 logo={logo} imagePath={imagePath} />
           <X
             className="w-8 text-white cursor-pointer"
             onClick={() => setSidebar(false)}
